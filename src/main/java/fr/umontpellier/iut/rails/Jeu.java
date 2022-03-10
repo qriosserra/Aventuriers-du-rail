@@ -56,7 +56,7 @@ public class Jeu implements Runnable {
     public Jeu(String[] nomJoueurs) {
         /*
          * ATTENTION : Cette méthode est à réécrire.
-         * 
+         *
          * Le code indiqué ici est un squelette minimum pour que le jeu se lance et que
          * l'interface graphique fonctionne.
          * Vous devez modifier ce code pour que les différents éléments du jeu soient
@@ -211,7 +211,13 @@ public class Jeu implements Runnable {
      *         disponible)
      */
     public Destination piocherDestination() {
-        throw new RuntimeException("Méthode non implémentée !");
+        Destination d;
+        if(!pileDestinations.isEmpty()) {
+            d = pileDestinations.remove(0);
+        }else{
+            d = null;
+        }
+        return d;
     }
 
     public List<Joueur> getJoueurs() {
