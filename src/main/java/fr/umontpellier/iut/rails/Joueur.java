@@ -233,7 +233,12 @@ public class Joueur {
      * @return liste des destinations qui n'ont pas été gardées par le joueur
      */
     public List<Destination> choisirDestinations(List<Destination> destinationsPossibles, int n) {
-        throw new RuntimeException("Méthode non implémentée !");
+        String choix =" ";
+        while(destinationsPossibles.size()<n && !choix.equals("")){
+            /** ajouter les nm des destination possible en list pour les bouton !!!!!!!!!!!!!!!!!!!!*/
+            this.choisir("choisir une destination !",new ArrayList<>(),null/*hfhfh*/,true);
+        }
+        return new ArrayList<>();
     }
 
     /**
