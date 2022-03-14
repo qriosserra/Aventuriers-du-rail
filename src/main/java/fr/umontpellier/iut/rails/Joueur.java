@@ -1,5 +1,4 @@
 package fr.umontpellier.iut.rails;
-
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -11,7 +10,6 @@ public class Joueur {
     public static enum Couleur {
         JAUNE, ROUGE, BLEU, VERT, ROSE;
     }
-
     /**
      * Jeu auquel le joueur est rattaché
      */
@@ -51,6 +49,7 @@ public class Joueur {
     private int score;
 
     public Joueur(String nom, Jeu jeu, Joueur.Couleur couleur) {
+
         this.nom = nom;
         this.jeu = jeu;
         this.couleur = couleur;
@@ -138,8 +137,8 @@ public class Joueur {
      * @return le choix de l'utilisateur (un élément de {@code choix}, ou de
      * {@code boutons} ou la chaîne vide)
      */
-    public String choisir(String instruction, Collection<String> choix, Collection<String> boutons,
-                          boolean peutPasser) {
+    public String choisir(String instruction, Collection<String> choix, Collection<String> boutons, boolean peutPasser) {
+
         // on retire les doublons de la liste des choix
         HashSet<String> choixDistincts = new HashSet<>();
         choixDistincts.addAll(choix);
@@ -147,19 +146,25 @@ public class Joueur {
 
         // Aucun choix disponible
         if (choixDistincts.isEmpty()) {
+
             return "";
         } else {
+
             // Un seul choix possible (renvoyer cet unique élément)
             if (choixDistincts.size() == 1 && !peutPasser)
+
                 return choixDistincts.iterator().next();
             else {
+
                 String entree;
                 // Lit l'entrée de l'utilisateur jusqu'à obtenir un choix valide
                 while (true) {
+
                     jeu.prompt(instruction, boutons, peutPasser);
                     entree = jeu.lireLigne();
                     // si une réponse valide est obtenue, elle est renvoyée
                     if (choixDistincts.contains(entree) || (peutPasser && entree.equals("")))
+
                         return entree;
                 }
             }
@@ -178,6 +183,7 @@ public class Joueur {
 
     @Override
     public String toString() {
+
         StringJoiner joiner = new StringJoiner("\n");
         joiner.add(String.format("=== %s (%d pts) ===", nom, score));
         joiner.add(String.format("  Gares: %d, Wagons: %d", nbGares, nbWagons));
@@ -200,6 +206,7 @@ public class Joueur {
      * (POJO)
      */
     public Object asPOJO() {
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("nom", nom);
         data.put("couleur", couleur);
@@ -209,8 +216,7 @@ public class Joueur {
         data.put("estJoueurCourant", this == jeu.getJoueurCourant());
         data.put("destinations", destinations.stream().map(Destination::asPOJO).collect(Collectors.toList()));
         data.put("cartesWagon", cartesWagon.stream().sorted().map(CouleurWagon::name).collect(Collectors.toList()));
-        data.put("cartesWagonPosees",
-                cartesWagonPosees.stream().sorted().map(CouleurWagon::name).collect(Collectors.toList()));
+        data.put("cartesWagonPosees", cartesWagonPosees.stream().sorted().map(CouleurWagon::name).collect(Collectors.toList()));
         return data;
     }
 
@@ -233,9 +239,11 @@ public class Joueur {
      * @return liste des destinations qui n'ont pas été gardées par le joueur
      */
     public List<Destination> choisirDestinations(List<Destination> destinationsPossibles, int n) {
+
         String choix =" ";
         while(destinationsPossibles.size()<n && !choix.equals("")){
-            /** ajouter les nm des destination possible en list pour les bouton !!!!!!!!!!!!!!!!!!!!*/
+
+            //Ajouter les numéros des destinations possibles en list pour les boutons !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
             this.choisir("choisir une destination !",new ArrayList<>(),null/*hfhfh*/,true);
         }
         return new ArrayList<>();

@@ -1,5 +1,4 @@
 package fr.umontpellier.iut.rails;
-
 import java.util.HashMap;
 
 public class Route {
@@ -30,6 +29,7 @@ public class Route {
     private String nom;
 
     public Route(Ville ville1, Ville ville2, int longueur, CouleurWagon couleur) {
+
         this.ville1 = ville1;
         this.ville2 = ville2;
         this.longueur = longueur;
@@ -83,9 +83,11 @@ public class Route {
      * @return un objet simple représentant les informations de la route
      */
     public Object asPOJO() {
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("nom", getNom());
         if (proprietaire != null) {
+
             data.put("proprietaire", proprietaire.getCouleur());
         }
         return data;

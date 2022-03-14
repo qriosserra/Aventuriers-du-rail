@@ -38,9 +38,11 @@ public class Ville {
     }
 
     public Object asPOJO() {
+
         HashMap<String, Object> data = new HashMap<>();
         data.put("nom", nom);
         if (proprietaire != null) {
+
             data.put("proprietaire", proprietaire.getCouleur());
         }    
         return data;
