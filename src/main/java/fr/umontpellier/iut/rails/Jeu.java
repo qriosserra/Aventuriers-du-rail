@@ -84,6 +84,22 @@ public class Jeu implements Runnable {
         Plateau plateau = Plateau.makePlateauEurope();
         villes = plateau.getVilles();
         routes = plateau.getRoutes();
+        for (int i=0; i<=12; i++){
+            this.pileCartesWagon.add(CouleurWagon.NOIR);
+            this.pileCartesWagon.add(CouleurWagon.BLEU);
+            this.pileCartesWagon.add(CouleurWagon.BLANC);
+            this.pileCartesWagon.add(CouleurWagon.JAUNE);
+            this.pileCartesWagon.add(CouleurWagon.ROUGE);
+            this.pileCartesWagon.add(CouleurWagon.GRIS);
+            this.pileCartesWagon.add(CouleurWagon.LOCOMOTIVE);
+            this.pileCartesWagon.add(CouleurWagon.VERT);
+            this.pileCartesWagon.add(CouleurWagon.ROSE);
+            this.pileCartesWagon.add(CouleurWagon.ORANGE);
+        }
+        this.pileCartesWagon.add(CouleurWagon.LOCOMOTIVE);
+        this.pileCartesWagon.add(CouleurWagon.LOCOMOTIVE);
+        Collections.shuffle(pileCartesWagon);
+        this.remplirCarteVisible();
     }
 
     public List<CouleurWagon> getPileCartesWagon() {
@@ -223,6 +239,9 @@ public class Jeu implements Runnable {
     public void remplirCarteVisible(){
 
         int nbLocomVisibles = 0;
+        while (cartesWagonVisibles.size()<5 && !pileCartesWagon.isEmpty()){
+            this.cartesWagonVisibles.add(this.piocherCarteWagon());
+        }
         do{
             for (int i = 0; i < cartesWagonVisibles.size() && nbLocomVisibles<3; i++) {
 
