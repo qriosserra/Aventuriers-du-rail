@@ -216,12 +216,11 @@ public class Jeu implements Runnable {
         if (cartesWagonVisibles.contains(c)) {
             cartesWagonVisibles.remove(c); //Apparement on jete la carte
             cartesWagonVisibles.add(pileCartesWagon.remove(0));
-            this.remplircartevisible();
+            this.remplirCarteVisible();
         }
     }
 
-
-    public void remplircartevisible(){
+    public void remplirCarteVisible(){
 
         int nbLocomVisibles = 0;
         do{
@@ -244,6 +243,7 @@ public class Jeu implements Runnable {
 
         }while (nbLocomVisibles >= 3);
     }
+
     /**
      * Pioche et renvoie la destination du dessus de la pile de destinations.
      * 
