@@ -89,4 +89,5 @@ public class JoueurTest {
                 CouleurWagon.ROUGE));
         assertEquals(nbCartesWagon - 2, pileCartesWagon.size());
     }
+
 }
