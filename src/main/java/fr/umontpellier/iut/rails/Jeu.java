@@ -195,7 +195,9 @@ public class Jeu implements Runnable {
         if (!pileCartesWagon.isEmpty()) return pileCartesWagon.remove(0);
         else if (!defausseCartesWagon.isEmpty()) {
 
-            for (int i = 0; i < defausseCartesWagon.size(); i++) pileCartesWagon.add(defausseCartesWagon.remove(i));
+            for (int i = 0; i < defausseCartesWagon.size(); i++){
+                pileCartesWagon.add(defausseCartesWagon.remove(i));
+            }
             Collections.shuffle(pileCartesWagon);
             return pileCartesWagon.remove(0);
         }
