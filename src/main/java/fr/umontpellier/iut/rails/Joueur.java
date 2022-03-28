@@ -243,16 +243,19 @@ public class Joueur {
         int i;
         ArrayList<String> nomdest = new ArrayList<>();
         ArrayList<Destination> dest= new ArrayList<>();
-        for (int j=0; j<destinationsPossibles.size(); j--){
+        for (int j=0; j<destinationsPossibles.size(); j++){
             nomdest.add(destinationsPossibles.get(j).getNom());
         }
-        while(destinationsPossibles.size()<n && !choix.equals("")){
+        while(destinationsPossibles.size()>n && !choix.equals("")){
             choix=this.choisir("choisir une destination !",new ArrayList<>(),nomdest,true);
             if (!choix.equals("")) {
                   i=nomdest.indexOf(choix);
                   dest.add(destinationsPossibles.get(i));
+                  destinationsPossibles.remove(i);
+                  nomdest.remove(i);
              }
         }
+        this.destinations.addAll(destinationsPossibles);
         return dest;
     }
 
