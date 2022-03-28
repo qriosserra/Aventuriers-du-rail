@@ -213,32 +213,37 @@ public class Jeu implements Runnable {
      */
     public void retirerCarteWagonVisible(CouleurWagon c) {
 
-        int nbLocomVisibles = 0;
         if (cartesWagonVisibles.contains(c)) {
             cartesWagonVisibles.remove(c); //Apparement on jete la carte
             cartesWagonVisibles.add(pileCartesWagon.remove(0));
-            do{
-                for (int i = 0; i < cartesWagonVisibles.size() && nbLocomVisibles<3; i++) {
-
-                    if (cartesWagonVisibles.get(i).toString().equals("Locomotive")) {
-                        nbLocomVisibles++;
-                    }
-                }
-                if (nbLocomVisibles>=3){
-                    for (int i = 0; i < cartesWagonVisibles.size(); i++) {
-
-                        this.pileCartesWagon.add(cartesWagonVisibles.remove(i));
-                    }
-                    Collections.shuffle(pileCartesWagon);
-                    for (int i=0; i<5; i++){
-                        cartesWagonVisibles.add(this.piocherCarteWagon());
-                    }
-                }
-
-            }while (nbLocomVisibles >= 3);
+            this.remplircartevisible();
         }
     }
 
+
+    public void remplircartevisible(){
+
+        int nbLocomVisibles = 0;
+        do{
+            for (int i = 0; i < cartesWagonVisibles.size() && nbLocomVisibles<3; i++) {
+
+                if (cartesWagonVisibles.get(i).toString().equals("Locomotive")) {
+                    nbLocomVisibles++;
+                }
+            }
+            if (nbLocomVisibles>=3){
+                for (int i = 0; i < cartesWagonVisibles.size(); i++) {
+
+                    this.pileCartesWagon.add(cartesWagonVisibles.remove(i));
+                }
+                Collections.shuffle(pileCartesWagon);
+                for (int i=0; i<5; i++){
+                    cartesWagonVisibles.add(this.piocherCarteWagon());
+                }
+            }
+
+        }while (nbLocomVisibles >= 3);
+    }
     /**
      * Pioche et renvoie la destination du dessus de la pile de destinations.
      * 
