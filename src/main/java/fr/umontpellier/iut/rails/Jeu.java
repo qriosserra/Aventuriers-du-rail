@@ -1,8 +1,6 @@
 package fr.umontpellier.iut.rails;
-
 import com.google.gson.Gson;
 import fr.umontpellier.iut.gui.GameServer;
-
 import java.util.*;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
@@ -180,7 +178,11 @@ public class Jeu implements Runnable {
      * @param c carte à défausser
      */
     public void defausserCarteWagon(CouleurWagon c) {
-        throw new RuntimeException("Méthode non implémentée !");
+        if (cartesWagonVisibles.size()<5){
+            cartesWagonVisibles.add(c);
+        }else {
+            defausseCartesWagon.add(c);
+        }
     }
 
     /**
@@ -210,7 +212,31 @@ public class Jeu implements Runnable {
      * (remise à 5, éventuellement remélangée si 3 locomotives visibles)
      */
     public void retirerCarteWagonVisible(CouleurWagon c) {
-        throw new RuntimeException("Méthode non implémentée !");
+
+        int nbLocomVisibles = 0;
+        if (cartesWagonVisibles.contains(c)) {
+            cartesWagonVisibles.remove(c); //Apparement on jete la carte
+            cartesWagonVisibles.add(pileCartesWagon.remove(0));
+            do{
+                for (int i = 0; i < cartesWagonVisibles.size() && nbLocomVisibles<3; i++) {
+
+                    if (cartesWagonVisibles.get(i).toString().equals("Locomotive")) {
+                        nbLocomVisibles++;
+                    }
+                }
+                if (nbLocomVisibles>=3){
+                    for (int i = 0; i < cartesWagonVisibles.size(); i++) {
+
+                        this.pileCartesWagon.add(cartesWagonVisibles.remove(i));
+                    }
+                    Collections.shuffle(pileCartesWagon);
+                    for (int i=0; i<5; i++){
+                        cartesWagonVisibles.add(this.piocherCarteWagon());
+                    }
+                }
+
+            }while (nbLocomVisibles >= 3);
+        }
     }
 
     /**
