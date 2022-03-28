@@ -1,5 +1,4 @@
 package fr.umontpellier.iut.rails;
-
 import java.util.HashMap;
 
 public class Ville {
