@@ -1,82 +1,82 @@
 package fr.umontpellier.iut.rails;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Plateau {
-	/**
-	 * Liste des villes
-	 */
-	private final List<Ville> villes;
-	/**
-	 * Liste des routes
-	 */
-	private final List<Route> routes;
+    /**
+     * Liste des villes
+     */
+    private final List<Ville> villes;
+    /**
+     * Liste des routes
+     */
+    private final List<Route> routes;
 
-	public Plateau(List<Ville> villes, List<Route> routes) {
-		this.villes = villes;
-		this.routes = routes;
-	}
+    public Plateau(List<Ville> villes, List<Route> routes) {
+        this.villes = villes;
+        this.routes = routes;
+    }
 
-	public List<Ville> getVilles() {
-		return villes;
-	}
+    public List<Ville> getVilles() {
+        return villes;
+    }
 
-	public List<Route> getRoutes() {
-		return routes;
-	}
+    public List<Route> getRoutes() {
+        return routes;
+    }
 
-	static public Plateau makePlateauEurope() {
-
-		Map<String, Ville> villes = new HashMap<>();
-		villes.put("amsterdam",			new Ville("Amsterdam"));
-		villes.put("angora",			new Ville("Angora"));
-		villes.put("athina",			new Ville("Athina"));
-		villes.put("barcelona",			new Ville("Barcelona"));
-		villes.put("berlin",			new Ville("Berlin"));
-		villes.put("brest",				new Ville("Brest"));
-		villes.put("brindisi",			new Ville("Brindisi"));
-		villes.put("bruxelles",			new Ville("Bruxelles"));
-		villes.put("bucuresti",			new Ville("Bucuresti"));
-		villes.put("budapest",			new Ville("Budapest"));
-		villes.put("cadiz",				new Ville("Cadiz"));
-		villes.put("constantinople",	new Ville("Constantinople"));
-		villes.put("danzig",			new Ville("Danzig"));
-		villes.put("dieppe",			new Ville("Dieppe"));
-		villes.put("edinburgh",			new Ville("Edinburgh"));
-		villes.put("erzurum",			new Ville("Erzurum"));
-		villes.put("essen",				new Ville("Essen"));
-		villes.put("frankfurt",			new Ville("Frankfurt"));
-		villes.put("kharkov",			new Ville("Kharkov"));
-		villes.put("kobenhavn",			new Ville("Kobenhavn"));
-		villes.put("kyiv",				new Ville("Kyiv"));
-		villes.put("lisboa",			new Ville("Lisboa"));
-		villes.put("london",			new Ville("London"));
-		villes.put("madrid",			new Ville("Madrid"));
-		villes.put("marseille",			new Ville("Marseille"));
-		villes.put("moskva",			new Ville("Moskva"));
-		villes.put("munchen",			new Ville("Munchen"));
-		villes.put("palermo",			new Ville("Palermo"));
-		villes.put("pamplona",			new Ville("Pamplona"));
-		villes.put("paris",				new Ville("Paris"));
-		villes.put("petrograd",			new Ville("Petrograd"));
-		villes.put("riga",				new Ville("Riga"));
-		villes.put("roma",				new Ville("Roma"));
-		villes.put("rostov",			new Ville("Rostov"));
-		villes.put("sarajevo",			new Ville("Sarajevo"));
-		villes.put("sevastopol",		new Ville("Sevastopol"));
-		villes.put("smolensk",			new Ville("Smolensk"));
-		villes.put("smyrna",			new Ville("Smyrna"));
-		villes.put("sochi",				new Ville("Sochi"));
-		villes.put("sofia",				new Ville("Sofia"));
-		villes.put("stockholm",			new Ville("Stockholm"));
-		villes.put("venezia",			new Ville("Venezia"));
-		villes.put("warszawa",			new Ville("Warszawa"));
-		villes.put("wien",				new Ville("Wien"));
-		villes.put("wilno",				new Ville("Wilno"));
-		villes.put("zagrab",			new Ville("Zagrab"));
-		villes.put("zurich",			new Ville("Zurich"));
+    static public Plateau makePlateauEurope() {
+        Map<String, Ville> villes = new HashMap<>();
+        villes.put("amsterdam", new Ville("Amsterdam"));
+        villes.put("angora", new Ville("Angora"));
+        villes.put("athina", new Ville("Athina"));
+        villes.put("barcelona", new Ville("Barcelona"));
+        villes.put("berlin", new Ville("Berlin"));
+        villes.put("brest", new Ville("Brest"));
+        villes.put("brindisi", new Ville("Brindisi"));
+        villes.put("bruxelles", new Ville("Bruxelles"));
+        villes.put("bucuresti", new Ville("Bucuresti"));
+        villes.put("budapest", new Ville("Budapest"));
+        villes.put("cadiz", new Ville("Cadiz"));
+        villes.put("constantinople", new Ville("Constantinople"));
+        villes.put("danzig", new Ville("Danzig"));
+        villes.put("dieppe", new Ville("Dieppe"));
+        villes.put("edinburgh", new Ville("Edinburgh"));
+        villes.put("erzurum", new Ville("Erzurum"));
+        villes.put("essen", new Ville("Essen"));
+        villes.put("frankfurt", new Ville("Frankfurt"));
+        villes.put("kharkov", new Ville("Kharkov"));
+        villes.put("kobenhavn", new Ville("Kobenhavn"));
+        villes.put("kyiv", new Ville("Kyiv"));
+        villes.put("lisboa", new Ville("Lisboa"));
+        villes.put("london", new Ville("London"));
+        villes.put("madrid", new Ville("Madrid"));
+        villes.put("marseille", new Ville("Marseille"));
+        villes.put("moskva", new Ville("Moskva"));
+        villes.put("munchen", new Ville("Munchen"));
+        villes.put("palermo", new Ville("Palermo"));
+        villes.put("pamplona", new Ville("Pamplona"));
+        villes.put("paris", new Ville("Paris"));
+        villes.put("petrograd", new Ville("Petrograd"));
+        villes.put("riga", new Ville("Riga"));
+        villes.put("roma", new Ville("Roma"));
+        villes.put("rostov", new Ville("Rostov"));
+        villes.put("sarajevo", new Ville("Sarajevo"));
+        villes.put("sevastopol", new Ville("Sevastopol"));
+        villes.put("smolensk", new Ville("Smolensk"));
+        villes.put("smyrna", new Ville("Smyrna"));
+        villes.put("sochi", new Ville("Sochi"));
+        villes.put("sofia", new Ville("Sofia"));
+        villes.put("stockholm", new Ville("Stockholm"));
+        villes.put("venezia", new Ville("Venezia"));
+        villes.put("warszawa", new Ville("Warszawa"));
+        villes.put("wien", new Ville("Wien"));
+        villes.put("wilno", new Ville("Wilno"));
+        villes.put("zagrab", new Ville("Zagrab"));
+        villes.put("zurich", new Ville("Zurich"));
 
 		ArrayList<Route> routes = new ArrayList<>();
 		routes.add(new Route(villes.get("amsterdam"),		villes.get("bruxelles"),		1, CouleurWagon.NOIR));
@@ -181,20 +181,17 @@ public class Plateau {
 		routes.add(new Route(villes.get("warszawa"),		villes.get("wilno"),			3, CouleurWagon.ROUGE));
 		routes.add(new Route(villes.get("wien"),			villes.get("zagrab"),			2, CouleurWagon.GRIS));
 
-		// Correction du nom pour les routes doubles
-		for (int i = 0; i < routes.size(); i++) {
-
-			Route r1 = routes.get(i);
-			if (i < routes.size() - 1) {
-
-				Route r2 = routes.get(i + 1);
-				if (r1.getNom().equals(r2.getNom())) {
-
-					r1.setNom(r1.getNom() + "(1)");
-					r2.setNom(r2.getNom() + "(2)");
-				}
-			}
-		}
-		return new Plateau(new ArrayList<>(villes.values()), routes);
-	}
+        // Correction du nom pour les routes doubles
+        for (int i = 0; i < routes.size(); i++) {
+            Route r1 = routes.get(i);
+            if (i < routes.size() - 1) {
+                Route r2 = routes.get(i + 1);
+                if (r1.getNom().equals(r2.getNom())) {
+                    r1.setNom(r1.getNom() + "(1)");
+                    r2.setNom(r2.getNom() + "(2)");
+                }
+            }
+        }
+        return new Plateau(new ArrayList<>(villes.values()), routes);
+    }
 }
