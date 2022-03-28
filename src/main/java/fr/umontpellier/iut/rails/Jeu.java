@@ -231,7 +231,6 @@ public class Jeu implements Runnable {
 
         if (cartesWagonVisibles.contains(c)) {
             cartesWagonVisibles.remove(c); //Apparement on jete la carte
-            cartesWagonVisibles.add(pileCartesWagon.remove(0));
             this.remplirCarteVisible();
         }
     }
