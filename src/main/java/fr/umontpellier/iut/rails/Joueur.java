@@ -239,14 +239,21 @@ public class Joueur {
      * @return liste des destinations qui n'ont pas été gardées par le joueur
      */
     public List<Destination> choisirDestinations(List<Destination> destinationsPossibles, int n) {
-
         String choix =" ";
-        while(destinationsPossibles.size()<n && !choix.equals("")){
-
-            //Ajouter les numéros des destinations possibles en list pour les boutons !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-            this.choisir("choisir une destination !",new ArrayList<>(),null/*hfhfh*/,true);
+        int i;
+        ArrayList<String> nomdest = new ArrayList<>();
+        ArrayList<Destination> dest= new ArrayList<>();
+        for (int j=0; j<destinationsPossibles.size(); j--){
+            nomdest.add(destinationsPossibles.get(j).getNom());
         }
-        return new ArrayList<>();
+        while(destinationsPossibles.size()<n && !choix.equals("")){
+            choix=this.choisir("choisir une destination !",new ArrayList<>(),nomdest,true);
+            if (!choix.equals("")) {
+                  i=nomdest.indexOf(choix);
+                  dest.add(destinationsPossibles.get(i));
+             }
+        }
+        return dest;
     }
 
     /**
