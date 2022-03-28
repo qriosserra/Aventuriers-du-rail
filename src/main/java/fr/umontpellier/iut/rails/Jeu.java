@@ -244,7 +244,7 @@ public class Jeu implements Runnable {
         do{
             for (int i = 0; i < cartesWagonVisibles.size() && nbLocomVisibles<3; i++) {
 
-                if (cartesWagonVisibles.get(i).toString().equals("Locomotive")) {
+                if (cartesWagonVisibles.get(i).name().equals("Locomotive")) {
                     nbLocomVisibles++;
                 }
             }
