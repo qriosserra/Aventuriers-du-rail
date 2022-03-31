@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 public class JoueurProfTest {
@@ -56,6 +55,23 @@ public class JoueurProfTest {
         joueur2 = joueurs.get(1);
         joueur3 = joueurs.get(2);
         joueur4 = joueurs.get(3);
+    }
+
+    /**
+     * Place 5 cartes ROUGE dans les cartes visibles, vide la pioche, la défausse et
+     * les mains des joueurs
+     */
+    void clear() {
+        List<CouleurWagon> cartesVisibles = jeu.getCartesWagonVisibles();
+        cartesVisibles.clear();
+        cartesVisibles.add(CouleurWagon.ROUGE);
+        cartesVisibles.add(CouleurWagon.ROUGE);
+        cartesVisibles.add(CouleurWagon.ROUGE);
+        cartesVisibles.add(CouleurWagon.ROUGE);
+        cartesVisibles.add(CouleurWagon.ROUGE);
+        jeu.getPileCartesWagon().clear();
+        jeu.getDefausseCartesWagon().clear();
+
         joueur1.getCartesWagon().clear();
         joueur2.getCartesWagon().clear();
         joueur3.getCartesWagon().clear();
@@ -63,8 +79,18 @@ public class JoueurProfTest {
     }
 
     @Test
-    @Disabled
+    void testInitialisation() {
+        for (Joueur joueur : jeu.getJoueurs()) {
+            assertEquals(3, joueur.getNbGares());
+            assertEquals(4, joueur.getCartesWagon().size());
+            assertEquals(45, joueur.getNbWagons());
+        }
+    }
+
+    @Test
     void testChoisirDestinations() {
+        clear();
+
         jeu.setInput("Athina - Angora (5)", "Frankfurt - Kobenhavn (5)");
         ArrayList<Destination> destinationsPossibles = new ArrayList<>();
         Destination d1 = new Destination("Athina", "Angora", 5);
@@ -86,24 +112,23 @@ public class JoueurProfTest {
     }
 
     @Test
-    @Disabled
     void testJouerTourPrendreCartesWagon() {
-        jeu.setInput("GRIS", "ROUGE");
+        clear();
 
-        // On met 5 cartes ROUGE dans les cartes wagon visibles
         List<CouleurWagon> cartesWagonVisibles = jeu.getCartesWagonVisibles();
-        cartesWagonVisibles.clear();
-        cartesWagonVisibles.add(CouleurWagon.ROUGE);
-        cartesWagonVisibles.add(CouleurWagon.ROUGE);
-        cartesWagonVisibles.add(CouleurWagon.ROUGE);
-        cartesWagonVisibles.add(CouleurWagon.ROUGE);
-        cartesWagonVisibles.add(CouleurWagon.ROUGE);
 
-        // On met VERT, BLEU, LOCOMOTIVE (haut de pile) dans la pile de cartes wagon
+        // On met VERT x3, BLEU, LOCOMOTIVE (haut de pile) dans la pile de cartes wagon
         List<CouleurWagon> pileCartesWagon = jeu.getPileCartesWagon();
+        pileCartesWagon.add(0, CouleurWagon.VERT);
+        pileCartesWagon.add(0, CouleurWagon.VERT);
+        pileCartesWagon.add(0, CouleurWagon.VERT);
         pileCartesWagon.add(0, CouleurWagon.BLEU);
         pileCartesWagon.add(0, CouleurWagon.LOCOMOTIVE);
-        int nbCartesWagon = pileCartesWagon.size();
+
+        jeu.setInput(
+                "JAUNE", // non valide (il n'y a que du ROUGE dans les cartes visibles)
+                "GRIS", // ok, pioche une LOCOMOTIVE sur le haut de la pile
+                "ROUGE"); // ok, prend dans les cartes visibles (remplacée par BLEU)
 
         joueur1.jouerTour();
         // le joueur devrait piocher la LOCOMOTIVE, prendre une carte ROUGE
@@ -120,12 +145,17 @@ public class JoueurProfTest {
                 CouleurWagon.ROUGE,
                 CouleurWagon.ROUGE,
                 CouleurWagon.ROUGE));
-        assertEquals(nbCartesWagon - 2, pileCartesWagon.size());
+        assertTrue(TestUtils.contientExactement(
+                jeu.getPileCartesWagon(),
+                CouleurWagon.VERT,
+                CouleurWagon.VERT,
+                CouleurWagon.VERT));
     }
 
     @Test
-    @Disabled
-     void testJouerTourPiocherDestinations() {
+    void testJouerTourPiocherDestinations() {
+        clear();
+
         Destination d1 = new Destination("Brest", "Marseille", 7);
         Destination d2 = new Destination("London", "Berlin", 7);
         Destination d3 = new Destination("Edinburgh", "Paris", 7);
@@ -154,8 +184,9 @@ public class JoueurProfTest {
     }
 
     @Test
-    @Disabled
     void testJouerTourCapturerRoute() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
         cartesWagon.add(CouleurWagon.BLEU);
         cartesWagon.add(CouleurWagon.BLEU);
@@ -181,11 +212,13 @@ public class JoueurProfTest {
                 jeu.getDefausseCartesWagon(),
                 CouleurWagon.BLEU,
                 CouleurWagon.LOCOMOTIVE));
+        assertEquals(14, joueur2.getScore());
     }
 
     @Test
-    @Disabled
     void testJouerTourCapturerRoutePlusieursCouleursPossibles() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
         cartesWagon.add(CouleurWagon.VERT);
         cartesWagon.add(CouleurWagon.BLEU);
@@ -199,12 +232,12 @@ public class JoueurProfTest {
 
         jeu.setInput(
                 "Marseille - Paris", // coûte 4 GRIS
-                "VERT", // ne convient pas (pas possible de payer en VERT)
-                "BLEU", // ok (paye tout en BLEU)
-                "ROUGE", // ne convient pas car déjà payé BLEU
+                "VERT", // ne convient pas (impossible de payer en VERT)
                 "LOCOMOTIVE", // ok
+                "BLEU", // ok (paye tout le reste en BLEU ou LOCOMOTIVE)
+                "ROUGE", // ne convient pas car déjà payé BLEU
                 "BLEU", // ok
-                "BLEU" // ok
+                "LOCOMOTIVE" // ok
         );
 
         joueur2.jouerTour();
@@ -212,19 +245,21 @@ public class JoueurProfTest {
         assertTrue(TestUtils.contientExactement(
                 joueur2.getCartesWagon(),
                 CouleurWagon.VERT,
-                CouleurWagon.ROUGE, CouleurWagon.ROUGE, CouleurWagon.ROUGE,
-                CouleurWagon.LOCOMOTIVE));
+                CouleurWagon.BLEU,
+                CouleurWagon.ROUGE, CouleurWagon.ROUGE, CouleurWagon.ROUGE));
         assertTrue(TestUtils.contientExactement(
                 jeu.getDefausseCartesWagon(),
                 CouleurWagon.BLEU,
                 CouleurWagon.BLEU,
-                CouleurWagon.BLEU,
+                CouleurWagon.LOCOMOTIVE,
                 CouleurWagon.LOCOMOTIVE));
+        assertEquals(19, joueur2.getScore());
     }
 
     @Test
-    @Disabled
     void testJouerTourCapturerTunnelOK() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
         cartesWagon.add(CouleurWagon.ROSE);
         cartesWagon.add(CouleurWagon.ROSE);
@@ -257,11 +292,13 @@ public class JoueurProfTest {
                 CouleurWagon.BLEU,
                 CouleurWagon.ROSE,
                 CouleurWagon.JAUNE));
+        assertEquals(14, joueur2.getScore());
     }
 
     @Test
-    @Disabled
     void testJouerTourCapturerTunnelImpossible() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
         cartesWagon.add(CouleurWagon.ROSE);
         cartesWagon.add(CouleurWagon.ROUGE);
@@ -289,11 +326,13 @@ public class JoueurProfTest {
                 CouleurWagon.ROSE,
                 CouleurWagon.BLEU,
                 CouleurWagon.JAUNE));
+        assertEquals(12, joueur2.getScore());
     }
 
     @Test
-    @Disabled
-    void testJouerTourCapturerTunnelPasse() {
+    void testJouerTourCapturerTunnelAbandonne() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
         cartesWagon.add(CouleurWagon.ROSE);
         cartesWagon.add(CouleurWagon.ROSE);
@@ -324,11 +363,53 @@ public class JoueurProfTest {
                 CouleurWagon.ROSE,
                 CouleurWagon.BLEU,
                 CouleurWagon.JAUNE));
+        assertEquals(12, joueur2.getScore());
     }
 
     @Test
-    @Disabled
-    void jouerTourConstruireUneGare() {
+    void testJouerTourCapturerFerry() {
+        clear();
+
+        List<CouleurWagon> cartesWagon = joueur3.getCartesWagon();
+        cartesWagon.add(CouleurWagon.ROSE);
+        cartesWagon.add(CouleurWagon.JAUNE);
+        cartesWagon.add(CouleurWagon.JAUNE);
+        cartesWagon.add(CouleurWagon.JAUNE);
+        cartesWagon.add(CouleurWagon.LOCOMOTIVE);
+
+        // Remarque:
+        // Il est possible de faire en sorte que la locomotive imposée par le ferry soit
+        // immédiatement payée par le joueur sans demander d'input (l'utilisateur doit
+        // alors choisir les cartes restantes pour payer) ou bien de demander à
+        // l'utilisateur de choisir toutes les cartes pour payer (y compris la
+        // locomotive imposée). Le test devrait fonctionner dans les deux cas.
+        jeu.setInput(
+                "Constantinople - Sevastopol", // (ferry) coûte 4 GRIS dont 2 LOCOMOTIVE (ne peut pas acheter)
+                "Palermo - Roma", // (ferry) coûte 4 GRIS dont 1 LOCOMOTIVE (peut acheter)
+                "ROSE", // non valide (ne peut pas couvrir le coût)
+                "JAUNE", // OK
+                "JAUNE", // OK
+                "JAUNE", // OK
+                "LOCOMOTIVE" // OK
+        );
+        joueur3.jouerTour();
+
+        assertEquals(joueur3, getRouteParNom("Palermo - Roma").getProprietaire());
+        assertTrue(TestUtils.contientExactement(
+                joueur3.getCartesWagon(),
+                CouleurWagon.ROSE));
+        assertTrue(TestUtils.contientExactement(
+                jeu.getDefausseCartesWagon(),
+                CouleurWagon.JAUNE, CouleurWagon.JAUNE, CouleurWagon.JAUNE,
+                CouleurWagon.LOCOMOTIVE));
+        assertEquals(null, getRouteParNom("Constantinople - Sevastopol").getProprietaire());
+        assertEquals(19, joueur3.getScore());
+    }
+
+    @Test
+    void testJouerTourConstruireUneGare() {
+        clear();
+
         List<CouleurWagon> cartesWagon = joueur3.getCartesWagon();
         cartesWagon.add(CouleurWagon.VERT);
         cartesWagon.add(CouleurWagon.BLEU);
@@ -348,31 +429,4 @@ public class JoueurProfTest {
                 CouleurWagon.ROUGE));
         assertEquals(2, joueur3.getNbGares());
     }
-
-    @Test
-    @Disabled
-    void jouerTourConstruireDeuxGares() {
-        List<CouleurWagon> cartesWagon = joueur3.getCartesWagon();
-        cartesWagon.add(CouleurWagon.VERT);
-        cartesWagon.add(CouleurWagon.BLEU);
-        cartesWagon.add(CouleurWagon.BLEU);
-        cartesWagon.add(CouleurWagon.ROUGE);
-        cartesWagon.add(CouleurWagon.ROUGE);
-
-        jeu.setInput("Paris", "ROUGE"); // premier tour, constuit une gare pour 1 carte
-        joueur3.jouerTour();
-
-        jeu.setInput("Madrid", "ROUGE", "BLEU", "BLEU"); // 2e tour, une gare pour 2 cartes
-        joueur3.jouerTour();
-
-        assertEquals(joueur3, getVilleParNom("Madrid").getProprietaire());
-        assertTrue(TestUtils.contientExactement(
-                joueur3.getCartesWagon(),
-                CouleurWagon.VERT, CouleurWagon.ROUGE));
-        assertTrue(TestUtils.contientExactement(
-                jeu.getDefausseCartesWagon(),
-                CouleurWagon.ROUGE, CouleurWagon.BLEU, CouleurWagon.BLEU));
-        assertEquals(1, joueur3.getNbGares());
-    }
-
 }
