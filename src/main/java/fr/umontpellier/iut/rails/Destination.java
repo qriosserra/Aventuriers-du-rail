@@ -42,6 +42,10 @@ public class Destination {
 		return data;
 	}
 
+	public int getValeur() {
+		return valeur;
+	}
+
 	/**
 	 * @return une liste contenant toutes les destinations "normales" du jeu
 	 */

@@ -101,6 +101,7 @@ public class Jeu implements Runnable {
         Collections.shuffle(pileCartesWagon);
         this.remplirCarteVisible();
         this.pileDestinations=Destination.makeDestinationsEurope();
+        Collections.shuffle(pileDestinations);
     }
 
     public List<CouleurWagon> getPileCartesWagon() {
@@ -141,47 +142,38 @@ public class Jeu implements Runnable {
          * moins
          * - exécuter encore un dernier tour de jeu pour chaque joueur après
          */
-
-        /*
-         * Le code proposé ici n'est qu'un exemple d'utilisation des méthodes pour
-         * interagir avec l'utilisateur, il n'a rien à voir avec le code de la partie et
-         * doit donc être entièrement réécrit.
-         */
-        
-        // Exemple d'utilisation
-        while (true) {
-            // le joueur doit choisir une valeur parmi "1", "2", "3", "4", "6" ou "8"
-            // les choix possibles sont présentés sous forme de boutons cliquables
-            String choix = joueurCourant.choisir(
-                    "Choisissez une taille de route.", // instruction
-                    new ArrayList<>(), // choix (hors boutons, ici aucun)
-                    new ArrayList<>(Arrays.asList("1", "2", "3", "4", "6", "8")), // boutons
-                    false); // le joueur ne peut pas passer (il doit faire un choix)
-
-            // une fois la longueur choisie, on filtre les routes pour ne garder que les
-            // routes de la longueur choisie
-            int longueurRoute = Integer.parseInt(choix);
-            ArrayList<String> routesPossibles = new ArrayList<>();
-            for (Route route : routes) {
-                if (route.getLongueur() == longueurRoute) {
-                    routesPossibles.add(route.getNom());
-                }
+        List<Destination> pileDestinationslong;
+        List<Destination> piledefausse;
+        List<Destination> cartpossible = new ArrayList<>();
+        pileDestinationslong=Destination.makeDestinationsLonguesEurope();
+        Collections.shuffle(pileDestinationslong);
+        for (Joueur joueur : joueurs) {
+            cartpossible.add(piocherDestination());
+            cartpossible.add(piocherDestination());
+            cartpossible.add(piocherDestination());
+            cartpossible.add(pileDestinationslong.remove(0));
+            piledefausse=joueur.choisirDestinations(cartpossible,2);
+            for (Destination dest : piledefausse) {
+                cartpossible.remove(dest);
             }
-
-            // le joueur doit maintenant choisir une route de la longueur choisie (les
-            // autres ne sont pas acceptées). Le joueur peut choisir de passer (aucun choix)
-            String choixRoute = joueurCourant.choisir(
-                    "Choisissez une route de longueur " + longueurRoute, // instruction
-                    routesPossibles, // choix (pas des boutons, il faut cliquer sur la carte)
-                    new ArrayList<>(), // boutons (ici aucun bouton créé)
-                    true); // le joueur peut passer sans faire de choix
-            if (choixRoute.equals("")) {
-                // le joueur n'a pas fait de choix (cliqué sur le bouton "passer")
-                log("Auncune route n'a été choisie");
-            } else {
-                // le joueur a choisi une route
-                log("Vous avez choisi la route " + choixRoute);
+            cartpossible.clear();
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+        }
+        int i=0;
+        joueurCourant=joueurs.get(i);
+        while(joueurCourant.getCartesWagon().size()>2){
+            joueurCourant.jouerTour();
+            i++;
+            if (i==joueurs.size()){
+                i=0;
             }
+            joueurCourant=joueurs.get(i);
+        }
+        for (Joueur joueuse : joueurs){
+            joueuse.jouerTour();
         }
     }
 
