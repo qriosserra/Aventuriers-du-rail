@@ -100,6 +100,7 @@ public class Jeu implements Runnable {
         this.pileCartesWagon.add(CouleurWagon.LOCOMOTIVE);
         Collections.shuffle(pileCartesWagon);
         this.remplirCarteVisible();
+        this.pileDestinations=Destination.makeDestinationsEurope();
     }
 
     public List<CouleurWagon> getPileCartesWagon() {
