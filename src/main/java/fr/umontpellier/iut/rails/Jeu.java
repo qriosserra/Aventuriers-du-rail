@@ -7,70 +7,44 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.stream.Collectors;
 
 public class Jeu implements Runnable {
-    /**
-     * Liste des joueurs
-     */
-    private List<Joueur> joueurs;
-    /**
-     * Le joueur dont c'est le tour
-     */
-    private Joueur joueurCourant;
-    /**
-     * Liste des villes représentées sur le plateau de jeu
-     */
-    private List<Ville> villes;
-    /**
-     * Liste des routes du plateau de jeu
-     */
-    private List<Route> routes;
-    /**
-     * Pile de pioche (face cachée)
-     */
-    private List<CouleurWagon> pileCartesWagon;
-    /**
-     * Cartes de la pioche face visible (normalement il y a 5 cartes face visible)
-     */
-    private List<CouleurWagon> cartesWagonVisibles;
-    /**
-     * Pile de cartes qui ont été défaussée au cours de la partie
-     */
-    private List<CouleurWagon> defausseCartesWagon;
+
+    private List<Joueur> joueurs; //Liste des joueurs
+    private Joueur joueurCourant; //Le joueur dont c'est le tour
+    private List<Ville> villes; //Liste des villes représentées sur le plateau de jeu
+    private List<Route> routes; //Liste des routes du plateau de jeu
+    private List<CouleurWagon> pileCartesWagon; //Pile de pioche face cachée
+    private List<CouleurWagon> cartesWagonVisibles; //Cartes de la pioche face visible (normalement 5 cartes face visible)
+    private List<CouleurWagon> defausseCartesWagon; //Pile de cartes défaussées au cours de la partie
     /**
      * Pile des cartes "Destination" (uniquement les destinations "courtes", les
      * destinations "longues" sont distribuées au début de la partie et ne peuvent
      * plus être piochées après)
      */
     private List<Destination> pileDestinations;
-    /**
-     * File d'attente des instructions recues par le serveur
-     */
-    private BlockingQueue<String> inputQueue;
-    /**
-     * Messages d'information du jeu
-     */
-    private List<String> log;
+    private BlockingQueue<String> inputQueue; //File d'attente des instructions recues par le serveur
+    private List<String> log; //Messages d'information du jeu
 
+    /**
+     * ATTENTION : Cette méthode est à réécrire.
+     *
+     * Le code indiqué ici est un squelette minimum pour que le jeu se lance et que
+     * l'interface graphique fonctionne.
+     * Vous devez modifier ce code pour que les différents éléments du jeu soient
+     * correctement initialisés.
+     */
     public Jeu(String[] nomJoueurs) {
-        /*
-         * ATTENTION : Cette méthode est à réécrire.
-         *
-         * Le code indiqué ici est un squelette minimum pour que le jeu se lance et que
-         * l'interface graphique fonctionne.
-         * Vous devez modifier ce code pour que les différents éléments du jeu soient
-         * correctement initialisés.
-         */
 
-        // initialisation des entrées/sorties
+        //Initialisation des entrées/sorties
         inputQueue = new LinkedBlockingQueue<>();
         log = new ArrayList<>();
 
-        // création des cartes
+        //Création des cartes
         pileCartesWagon = new ArrayList<>();
         cartesWagonVisibles = new ArrayList<>();
         defausseCartesWagon = new ArrayList<>();
         pileDestinations = new ArrayList<>();
 
-        // création des joueurs
+        //Création des joueurs
         ArrayList<Joueur.Couleur> couleurs = new ArrayList<>(Arrays.asList(Joueur.Couleur.values()));
         Collections.shuffle(couleurs);
         joueurs = new ArrayList<>();
@@ -80,7 +54,7 @@ public class Jeu implements Runnable {
         }
         joueurCourant = joueurs.get(0);
 
-        // création des villes et des routes
+        //Création des villes et des routes
         Plateau plateau = Plateau.makePlateauEurope();
         villes = plateau.getVilles();
         routes = plateau.getRoutes();

@@ -255,7 +255,7 @@ public class Joueur {
             nomdest.add(destinationsPossibles.get(j).getNom());
         }
         while(destinationsPossibles.size()>n && !choix.equals("")){
-            choix=this.choisir("choisir une destination !",new ArrayList<>(),nomdest,true);
+            choix=this.choisir(this.nom+" choisie une destination maintenant!",new ArrayList<>(),nomdest,true);
             if (!choix.equals("")) {
                   i=nomdest.indexOf(choix);
                   dest.add(destinationsPossibles.get(i));
@@ -268,18 +268,22 @@ public class Joueur {
     }
 
     /**
-     * Exécute un tour de jeu du joueur.
+     * Exécute un tour de jeu du joueur. Cette méthode attend que le joueur choisisse une des options suivantes :
      * <p>
-     * Cette méthode attend que le joueur choisisse une des options suivantes :
      * - le nom d'une carte wagon face visible à prendre ;
+     * <p>
      * - le nom "GRIS" pour piocher une carte wagon face cachée s'il reste des
      * cartes à piocher dans la pile de pioche ou dans la pile de défausse ;
+     * <p>
      * - la chaîne "destinations" pour piocher des cartes destination ;
+     * <p>
      * - le nom d'une ville sur laquelle il peut construire une gare (ville non
      * prise par un autre joueur, le joueur a encore des gares en réserve et assez
      * de cartes wagon pour construire la gare) ;
+     * <p>
      * - le nom d'une route que le joueur peut capturer (pas déjà capturée, assez de
      * wagons et assez de cartes wagon) ;
+     * <p>
      * - la chaîne de caractères vide pour passer son tour
      * <p>
      * Lorsqu'un choix valide est reçu, l'action est exécutée (il est possible que
@@ -287,6 +291,15 @@ public class Joueur {
      * "construire une gare", "choisir les destinations à défausser", etc.)
      */
     public void jouerTour() {
-        throw new RuntimeException("Méthode non implémentée !");
+
+        ArrayList<String> choix = new ArrayList<>();
+
+        if (!jeu.getCartesWagonVisibles().isEmpty()) choix.add(null);
+
+        if (!jeu.getPileCartesWagon().isEmpty()) choix.add("");
+
+        if (!jeu.getPileDestinations().isEmpty()) choix.add("destinations");
+
+        choisir(this.nom+" choisie une action", choix, boutons, true);
     }
 }
