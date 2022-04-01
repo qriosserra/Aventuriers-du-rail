@@ -84,7 +84,7 @@ public class Jeu implements Runnable {
         Plateau plateau = Plateau.makePlateauEurope();
         villes = plateau.getVilles();
         routes = plateau.getRoutes();
-        for (int i=0; i<=12; i++){
+        for (int i=1; i<=12; i++){
             this.pileCartesWagon.add(CouleurWagon.NOIR);
             this.pileCartesWagon.add(CouleurWagon.BLEU);
             this.pileCartesWagon.add(CouleurWagon.BLANC);
@@ -185,7 +185,7 @@ public class Jeu implements Runnable {
     }
 
     /**
-     * Ajoute une carte dans la pile de défausse.
+     * Ajoute une carte dans la pile de défausse.fr.umontpellier.iut.rails.JoueurProfTest
      * Dans le cas peu probable, où il y a moins de 5 cartes wagon face visibles
      * (parce que la pioche
      * et la défausse sont vides), alors il faut immédiatement rendre cette carte
@@ -361,5 +361,13 @@ public class Jeu implements Runnable {
                         new AbstractMap.SimpleEntry<String, Object>("cartesWagonVisibles", cartesWagonVisibles))),
                 new AbstractMap.SimpleEntry<String, Object>("log", log));
         GameServer.setEtatJeu(new Gson().toJson(data));
+    }
+
+    public List<CouleurWagon> getDefausseCartesWagon( ) {
+        return this.defausseCartesWagon;
+    }
+
+    public List<Destination> getPileDestinations() {
+        return this.pileDestinations;
     }
 }

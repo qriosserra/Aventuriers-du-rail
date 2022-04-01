@@ -4,6 +4,14 @@ import java.util.stream.Collectors;
 
 public class Joueur {
 
+    public int getNbGares() {
+        return this.nbGares;
+    }
+
+    public int getScore() {
+        return this.score;
+    }
+
     /**
      * Les couleurs possibles pour les joueurs (pour l'interface graphique)
      */
