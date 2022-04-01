@@ -142,7 +142,7 @@ public class Jeu implements Runnable {
          * - exécuter encore un dernier tour de jeu pour chaque joueur après
          */
 
-        /**
+        /*
          * Le code proposé ici n'est qu'un exemple d'utilisation des méthodes pour
          * interagir avec l'utilisateur, il n'a rien à voir avec le code de la partie et
          * doit donc être entièrement réécrit.
