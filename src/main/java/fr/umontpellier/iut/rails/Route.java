@@ -1,4 +1,5 @@
 package fr.umontpellier.iut.rails;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Route {
@@ -91,5 +92,196 @@ public class Route {
             data.put("proprietaire", proprietaire.getCouleur());
         }
         return data;
+    }
+
+    //pas BON !!!!
+    public boolean coupValide(Joueur j){
+        ArrayList<CouleurWagon> joueur=new ArrayList<>();
+        joueur.addAll(j.getCartesWagon());
+        boolean b=true;
+        if (this.proprietaire==null) {
+            int nbcarte = 0;
+            ArrayList<CouleurWagon> carte = new ArrayList<>();
+            if (this instanceof Ferry) {
+                ArrayList<CouleurWagon> ferry = new ArrayList<>();
+                for (int i = 0; i < ((Ferry) this).getNbLocomotives(); i++) {
+                    ferry.add(CouleurWagon.LOCOMOTIVE);
+                }
+                if (!joueur.containsAll(ferry)) {
+                    b = false;
+                }
+                if (this.couleur==CouleurWagon.GRIS && b){
+                    verifier_gris(joueur,this.longueur-((Ferry) this).getNbLocomotives());
+                }else if(b){
+                    for (int i = 0; i < longueur - ((Ferry) this).getNbLocomotives(); i++) {
+                        carte.add(couleur);
+                        if (joueur.containsAll(carte)) {
+                            nbcarte++;
+                            joueur.remove(carte.get(0));
+                        }
+                    }
+                    if (!(nbcarte == carte.size()) && b) {
+                        int nbreste = carte.size() - nbcarte;
+                        carte.clear();
+                        for (int i = 0; i < nbreste + ((Ferry) this).getNbLocomotives(); i++) {
+                            carte.add(CouleurWagon.LOCOMOTIVE);
+                        }
+                        if (!joueur.containsAll(carte)) {
+                            b = false;
+                        }
+                    }
+                }
+            } else if (couleur == CouleurWagon.GRIS) {
+                b=verifier_gris(joueur,this.longueur);
+            } else if (b) {
+                for (int i = 0; i < longueur; i++) {
+                    carte.add(couleur);
+                    if (joueur.containsAll(carte)) {
+                        nbcarte++;
+                        joueur.remove(carte.get(0));
+                    }
+                }
+                if (!(nbcarte == carte.size())) {
+                    int nbreste = carte.size() - nbcarte;
+                    carte.clear();
+                    for (int i = 0; i < nbreste; i++) {
+                        carte.add(CouleurWagon.LOCOMOTIVE);
+                    }
+                    if (!joueur.containsAll(carte)) {
+                             b = false;
+                    }
+                }
+            }
+        }else{b=false;}
+
+        return b;
+
+    }
+
+    public boolean verifier_gris(ArrayList<CouleurWagon> joueur, int longueur){
+        boolean b=false;
+        int nbcarte = 0;
+        ArrayList<CouleurWagon> carte = new ArrayList<>();
+        int nbcarteplus=0;
+        for (int i = 0; i < longueur; i++) {
+            carte.add(CouleurWagon.NOIR);
+            if (joueur.containsAll(carte)) {
+                nbcarte++;
+                joueur.remove(carte.get(0));
+            }
+        }
+        nbcarteplus=nbcarte;
+        if (nbcarte==longueur){
+            b=true;
+        }else{
+            nbcarte=0;
+            carte.clear();
+            for (int i = 0; i < longueur; i++) {
+                carte.add(CouleurWagon.ROSE);
+                if (joueur.containsAll(carte)) {
+                    nbcarte++;
+                    joueur.remove(carte.get(0));
+                }
+            }
+            if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+            if (nbcarte==longueur){
+                b=true;
+            }else{
+                nbcarte=0;
+                carte.clear();
+                for (int i = 0; i < longueur; i++) {
+                    carte.add(CouleurWagon.ROUGE);
+                    if (joueur.containsAll(carte)) {
+                        nbcarte++;
+                        joueur.remove(carte.get(0));
+                    }
+                }
+                if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                if (nbcarte==longueur){
+                    b=true;
+                }else{
+                    nbcarte=0;
+                    carte.clear();
+                    for (int i = 0; i < longueur; i++) {
+                        carte.add(CouleurWagon.ORANGE);
+                        if (joueur.containsAll(carte)) {
+                            nbcarte++;
+                            joueur.remove(carte.get(0));
+                        }
+                    }
+                    if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                    if (nbcarte==longueur){
+                        b=true;
+                    }else{
+                        nbcarte=0;
+                        carte.clear();
+                        for (int i = 0; i < longueur; i++) {
+                            carte.add(CouleurWagon.BLEU);
+                            if (joueur.containsAll(carte)) {
+                                nbcarte++;
+                                joueur.remove(carte.get(0));
+                            }
+                        }
+                        if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                        if (nbcarte==longueur){
+                            b=true;
+                        }else{
+                            nbcarte=0;
+                            carte.clear();
+                            for (int i = 0; i < longueur; i++) {
+                                carte.add(CouleurWagon.JAUNE);
+                                if (joueur.containsAll(carte)) {
+                                    nbcarte++;
+                                    joueur.remove(carte.get(0));
+                                }
+                            }
+                            if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                            if (nbcarte==longueur){
+                                b=true;
+                            }else{
+                                nbcarte=0;
+                                carte.clear();
+                                for (int i = 0; i < longueur; i++) {
+                                    carte.add(CouleurWagon.BLANC);
+                                    if (joueur.containsAll(carte)) {
+                                        nbcarte++;
+                                        joueur.remove(carte.get(0));
+                                    }
+                                }
+                                if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                                if (nbcarte==longueur){
+                                    b=true;
+                                }else{
+                                    nbcarte=0;
+                                    carte.clear();
+                                    for (int i = 0; i < longueur; i++) {
+                                        carte.add(CouleurWagon.VERT);
+                                        if (joueur.containsAll(carte)) {
+                                            nbcarte++;
+                                            joueur.remove(carte.get(0));
+                                        }
+                                    }
+                                    if (nbcarte>nbcarteplus)nbcarteplus=nbcarte;
+                                    if (nbcarte==longueur){
+                                        b=true;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        if (!(nbcarteplus == longueur)) {
+            int nbreste = longueur - nbcarteplus;
+            carte.clear();
+            for (int i = 0; i < nbreste; i++) {
+                carte.add(CouleurWagon.LOCOMOTIVE);
+            }
+            if (!joueur.containsAll(carte)) {
+                b = false;
+            }
+        }
+        return b;
     }
 }

@@ -4,13 +4,6 @@ import java.util.stream.Collectors;
 
 public class Joueur {
 
-    public int getNbGares() {
-        return this.nbGares;
-    }
-
-    public int getScore() {
-        return this.score;
-    }
 
     /**
      * Les couleurs possibles pour les joueurs (pour l'interface graphique)
@@ -67,6 +60,15 @@ public class Joueur {
         cartesWagonPosees = new ArrayList<>();
         destinations = new ArrayList<>();
         score = 12; // chaque gare non utilisée vaut 4 points
+    }
+
+
+    public int getNbGares() {
+        return this.nbGares;
+    }
+
+    public int getScore() {
+        return this.score;
     }
 
     public String getNom() {
@@ -294,12 +296,24 @@ public class Joueur {
 
         ArrayList<String> choix = new ArrayList<>();
 
-        if (!jeu.getCartesWagonVisibles().isEmpty()) choix.add(null);
+        if (!jeu.getCartesWagonVisibles().isEmpty()) {
+            for(CouleurWagon wa:jeu.getCartesWagonVisibles() ){
+                choix.add(wa.name());
+            }
 
-        if (!jeu.getPileCartesWagon().isEmpty()) choix.add("");
+        };
+
+        if (!jeu.getPileCartesWagon().isEmpty()) choix.add("Wagon");
 
         if (!jeu.getPileDestinations().isEmpty()) choix.add("destinations");
 
-        choisir(this.nom+" choisie une action", choix, boutons, true);
+        for (Route R:jeu.getRoutes()){
+            if (R.coupValide(this)){
+                choix.add(R.getNom());
+            }
+        }
+        this.choisir("test",choix,choix,true);
+
+
     }
 }

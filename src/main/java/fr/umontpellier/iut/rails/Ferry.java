@@ -17,4 +17,8 @@ public class Ferry extends Route {
 
 		return String.format("[%s - %s (%d, %s, %d)]", getVille1(), getVille2(), getLongueur(), getCouleur(), nbLocomotives);
 	}
+
+	public int getNbLocomotives() {
+		return nbLocomotives;
+	}
 }
