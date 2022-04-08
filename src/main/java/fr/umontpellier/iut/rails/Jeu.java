@@ -64,7 +64,6 @@ public class Jeu implements Runnable {
             this.pileCartesWagon.add(CouleurWagon.BLANC);
             this.pileCartesWagon.add(CouleurWagon.JAUNE);
             this.pileCartesWagon.add(CouleurWagon.ROUGE);
-            this.pileCartesWagon.add(CouleurWagon.GRIS);
             this.pileCartesWagon.add(CouleurWagon.LOCOMOTIVE);
             this.pileCartesWagon.add(CouleurWagon.VERT);
             this.pileCartesWagon.add(CouleurWagon.ROSE);
@@ -76,6 +75,12 @@ public class Jeu implements Runnable {
         this.remplirCarteVisible();
         this.pileDestinations=Destination.makeDestinationsEurope();
         Collections.shuffle(pileDestinations);
+        for (Joueur joueur: joueurs){
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
+        }
     }
 
     public List<CouleurWagon> getPileCartesWagon() {
@@ -131,10 +136,6 @@ public class Jeu implements Runnable {
                 cartpossible.remove(dest);
             }
             cartpossible.clear();
-            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
-            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
-            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
-            joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
         }
         int i=0;
         joueurCourant=joueurs.get(i);

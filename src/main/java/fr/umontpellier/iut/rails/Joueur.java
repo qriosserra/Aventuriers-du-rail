@@ -316,4 +316,29 @@ public class Joueur {
 
 
     }
+
+    public void choixRoute(Route r){
+        if (r instanceof Tunnel){
+
+        }else if(r instanceof Ferry){
+
+        }else{
+            if (r.getCouleur()!=CouleurWagon.GRIS) {
+                ArrayList<String> str = new ArrayList<>();
+                CouleurWagon coul = null;
+                for (CouleurWagon couls:this.getCartesWagon()){
+                    str.add(couls.name());
+                }
+                for (int i=0; i<r.getLongueur(); i++) {
+                    while (r.demande().contains(coul)) {
+                        choisir(this.nom + " choisir les carte a dépensé", str, str, false);
+                    }
+                    this.cartesWagon.remove(coul);
+                    this.cartesWagonPosees.add(coul);
+                }
+                this.cartesWagonPosees.clear();
+                r.setProprietaire(this);
+            }
+        }
+    }
 }

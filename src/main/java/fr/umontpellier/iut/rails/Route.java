@@ -284,4 +284,26 @@ public class Route {
         }
         return b;
     }
+
+    public ArrayList<CouleurWagon> demande(){
+        ArrayList<CouleurWagon> demande = new ArrayList<>();
+        demande.add(CouleurWagon.LOCOMOTIVE);
+        demande.add(this.couleur);
+        return demande;
+    }
+
+    public ArrayList<CouleurWagon>[] demandegris(){
+        ArrayList<CouleurWagon>[] demande = new ArrayList[8];
+        demande[0].add(CouleurWagon.VERT);
+        demande[1].add(CouleurWagon.NOIR);
+        demande[2].add(CouleurWagon.BLANC);
+        demande[3].add(CouleurWagon.BLEU);
+        demande[4].add(CouleurWagon.JAUNE);
+        demande[5].add(CouleurWagon.ROUGE);
+        demande[6].add(CouleurWagon.ORANGE);
+        demande[7].add(CouleurWagon.ROSE);
+        demande[8].add(CouleurWagon.LOCOMOTIVE);
+
+        return demande;
+    }
 }
