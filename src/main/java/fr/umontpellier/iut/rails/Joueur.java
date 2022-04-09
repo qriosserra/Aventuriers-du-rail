@@ -377,8 +377,10 @@ public class Joueur {
                 String choix;
                 for (int i=0; i<r.getLongueur(); i++) {
                     do{
-                        choix=choisir(this.nom + " choisir les carte a dépensé", str, str, false);
-                        coul=CouleurWagon.nomToWagon(choix);
+                        if(str.size()>0) {
+                            choix = choisir(this.nom + " choisir les carte a dépensé", str, str, false);
+                            coul = CouleurWagon.nomToWagon(choix);
+                        }
                     }while (r.getCouleur()!=coul && coul!=CouleurWagon.LOCOMOTIVE);
                     this.cartesWagon.remove(coul);
                     this.cartesWagonPosees.add(coul);
