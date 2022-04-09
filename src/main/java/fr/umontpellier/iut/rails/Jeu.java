@@ -338,4 +338,16 @@ public class Jeu implements Runnable {
     public List<Destination> getPileDestinations() {
         return this.pileDestinations;
     }
+
+    public Route nameToRoute(String name){
+        int i=0;boolean b=true;Route r= null;
+        while (i<this.routes.size() && b){
+            r=this.routes.get(i);
+            if (r.getNom().equals(name)){
+                b=false;
+            }
+            i++;
+        }
+        return r;
+    }
 }

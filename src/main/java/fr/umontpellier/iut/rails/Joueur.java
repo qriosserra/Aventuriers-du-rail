@@ -301,18 +301,63 @@ public class Joueur {
                 choix.add(wa.name());
             }
 
-        };
+        }
 
-        if (!jeu.getPileCartesWagon().isEmpty()) choix.add("Wagon");
+        if (!jeu.getPileCartesWagon().isEmpty()) choix.add("GRIS");
 
         if (!jeu.getPileDestinations().isEmpty()) choix.add("destinations");
 
         for (Route R:jeu.getRoutes()){
-            if (R.coupValide(this)){
+            if (R.coupValide(this) && R.getProprietaire()==null){
                 choix.add(R.getNom());
             }
         }
-        this.choisir("test",choix,choix,true);
+        String choixs=this.choisir("test",choix,choix,true);
+        if (this.jeu.getRoutes().contains(jeu.nameToRoute(choixs))){
+            this.choixRoute(jeu.nameToRoute(choixs));
+        }
+
+        if (this.jeu.getCartesWagonVisibles().contains(CouleurWagon.nomToWagon(choixs)) || choixs.equals("GRIS")){
+            if(choixs.equals("LOCOMOTIVE")){
+                this.cartesWagon.add(CouleurWagon.LOCOMOTIVE);
+                this.jeu.retirerCarteWagonVisible(CouleurWagon.LOCOMOTIVE);
+            }else if (!choixs.equals("GRIS")){
+                this.cartesWagon.add(CouleurWagon.nomToWagon(choixs));
+                this.jeu.retirerCarteWagonVisible(CouleurWagon.nomToWagon(choixs));
+                choix.clear();
+                if (!jeu.getCartesWagonVisibles().isEmpty()) {
+                    for(CouleurWagon wa:jeu.getCartesWagonVisibles() ){
+                        choix.add(wa.name());
+                    }
+
+                }if (!jeu.getPileCartesWagon().isEmpty()) choix.add("GRIS");
+                choixs=this.choisir("test",choix,choix,true);
+                if (!choixs.equals("GRIS")) {
+                    this.cartesWagon.add(CouleurWagon.nomToWagon(choixs));
+                    this.jeu.retirerCarteWagonVisible(CouleurWagon.nomToWagon(choixs));
+                }else{
+                    this.cartesWagon.add(this.jeu.piocherCarteWagon());
+                }
+
+            }else{
+                this.cartesWagon.add(this.jeu.piocherCarteWagon());
+                choix.clear();
+                if (!jeu.getCartesWagonVisibles().isEmpty()) {
+                    for(CouleurWagon wa:jeu.getCartesWagonVisibles() ){
+                        choix.add(wa.name());
+                    }
+
+                }if (!jeu.getPileCartesWagon().isEmpty()) choix.add("GRIS");
+                choixs=this.choisir("test",choix,choix,true);
+                if (!choixs.equals("GRIS")) {
+                    this.cartesWagon.add(CouleurWagon.nomToWagon(choixs));
+                    this.jeu.retirerCarteWagonVisible(CouleurWagon.nomToWagon(choixs));
+                }else{
+                    this.cartesWagon.add(this.jeu.piocherCarteWagon());
+                }
+            }
+        }
+
 
 
     }
@@ -329,12 +374,18 @@ public class Joueur {
                 for (CouleurWagon couls:this.getCartesWagon()){
                     str.add(couls.name());
                 }
+                String choix;
                 for (int i=0; i<r.getLongueur(); i++) {
-                    while (r.demande().contains(coul)) {
-                        choisir(this.nom + " choisir les carte a dépensé", str, str, false);
-                    }
+                    do{
+                        choix=choisir(this.nom + " choisir les carte a dépensé", str, str, false);
+                        coul=CouleurWagon.nomToWagon(choix);
+                    }while (r.getCouleur()!=coul && coul!=CouleurWagon.LOCOMOTIVE);
                     this.cartesWagon.remove(coul);
                     this.cartesWagonPosees.add(coul);
+                    str.clear();
+                    for (CouleurWagon couls:this.getCartesWagon()){
+                        str.add(couls.name());
+                    }
                 }
                 this.cartesWagonPosees.clear();
                 r.setProprietaire(this);

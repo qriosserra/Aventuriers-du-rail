@@ -38,6 +38,17 @@ public enum CouleurWagon {
 		return new ArrayList<>(List.of(NOIR, BLANC, JAUNE, ROUGE, ORANGE, BLEU, VERT, ROSE));
 	}
 
+	public static CouleurWagon nomToWagon(String choix){
+		if (choix.equals( CouleurWagon.LOCOMOTIVE.name())){
+			return CouleurWagon.LOCOMOTIVE;
+		}
+		for (CouleurWagon coul:CouleurWagon.getCouleursSimples()){
+			if (coul.name().equals(choix)){
+				return coul;
+			}
+		}
+		return null;
+	}
 	/**
 	 * Renvoie la représentation sous forme d'une chaîne de caractères d'une liste
 	 * non ordonnée de couleurs.
