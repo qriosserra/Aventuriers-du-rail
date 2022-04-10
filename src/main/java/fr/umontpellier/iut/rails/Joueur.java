@@ -496,9 +496,96 @@ public class Joueur {
                         this.cartesWagonPosees.clear();
                     }
                 }
+            }else{
+                ArrayList<String> str = new ArrayList<>();
+                CouleurWagon coul = null;
+                int lon =r.getLongueur();
+                for (CouleurWagon couls:this.getCartesWagon()){
+                    str.add(couls.name());
+                }
+                String choix;
+                CouleurWagon wagonchoix=null;
+                for (int i=0; i<lon; i++) {
+                    do{
+                        if(str.size()>0) {
+                            choix = choisir(this.nom + " choisir les carte a dépensé", str, str, false);
+                            coul = CouleurWagon.nomToWagon(choix);
+                            if (wagonchoix==null && this.assezdecarte(r.getLongueur(),coul) && coul!=CouleurWagon.LOCOMOTIVE){
+                                wagonchoix=coul;
+                            }
+                        }
+                    }while (wagonchoix!=coul && coul!=CouleurWagon.LOCOMOTIVE);
+                    this.cartesWagon.remove(coul);
+                    this.cartesWagonPosees.add(coul);
+                    str.clear();
+                    for (CouleurWagon couls:this.getCartesWagon()){
+                        str.add(couls.name());
+                    }
+                }
+                ArrayList<CouleurWagon> ajout = new ArrayList<>();
+                int nbajout=0,
+                        nbajoueur=0;
+                boolean b=true;
+                StringBuilder s= new StringBuilder();
+                for (int i=0;i<3;i++){
+                    ajout.add(jeu.getPileCartesWagon().remove(0));
+                    if (ajout.get(i)==wagonchoix || ajout.get(i)==CouleurWagon.LOCOMOTIVE){
+                        nbajout++;
+                    }
+                    s.append(ajout.get(i).toString()).append(" ");
+                }
+                log(s.toString());
+                for (CouleurWagon c:this.cartesWagon){
+                    if (c==wagonchoix || c==CouleurWagon.LOCOMOTIVE){
+                        nbajoueur++;
+                    }
+                }
+                for (CouleurWagon c:ajout){
+                    jeu.defausserCarteWagon(c);
+                }
+                if (nbajout==0){
+                    for (CouleurWagon c : cartesWagonPosees) {
+                        jeu.defausserCarteWagon(c);
+                    }
+                    this.cartesWagonPosees.clear();
+                    this.score += r.point();
+                    r.setProprietaire(this);
+                }else {
+                    boolean passe=true;
+                    if (nbajoueur >= nbajout) {
+                        for (int i = 0; i < nbajout && passe; i++) {
+                            do {
+                                if (str.size() > 0) {
+                                    choix = choisir(this.nom + " choisir les carte a dépensé", str, str, true);
+                                    if (choix!="") {
+                                        coul = CouleurWagon.nomToWagon(choix);
+                                    }else{
+                                        passe=false;
+                                    }
+                                }
+                            } while (wagonchoix != coul && coul != CouleurWagon.LOCOMOTIVE && passe);
+                            if (passe) {
+                                this.cartesWagonPosees.add(coul);
+                                this.cartesWagon.remove(coul);
+                            }
+                        }
+                        if (passe) {
+                            for (CouleurWagon c : cartesWagonPosees) {
+                                jeu.defausserCarteWagon(c);
+                            }
+                            this.cartesWagonPosees.clear();
+                            this.score += r.point();
+                            r.setProprietaire(this);
+                        }else{
+                            this.cartesWagon.addAll(this.cartesWagonPosees);
+                            this.cartesWagonPosees.clear();
+                        }
+                    } else {
+                        this.cartesWagon.addAll(this.cartesWagonPosees);
+                        this.cartesWagonPosees.clear();
+                    }
+                }
             }
-
-
 
 
         }else if(r instanceof Ferry){//les ferry tjr gris
