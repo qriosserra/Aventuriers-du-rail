@@ -351,4 +351,15 @@ public class Jeu implements Runnable {
         }
         return null;
     }
+    
+    public Ville nameToVille(String name) {
+        
+        for (Ville ville: villes) {
+            
+            if (name.equals(ville.getNom())) {
+                
+                return ville;
+            }
+        }
+    }
 }

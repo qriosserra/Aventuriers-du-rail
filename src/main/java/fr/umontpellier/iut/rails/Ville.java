@@ -27,6 +27,38 @@ public class Ville {
         this.proprietaire = proprietaire;
     }
     
+    public boolean coupValide(Joueur joueur) {
+        
+        boolean bool = false;
+        
+        if (proprietaire == null) {
+            
+            bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.BLANC);
+            if (!bool){
+                bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.NOIR);
+                if (!bool){
+                    bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.VERT);
+                    if (!bool){
+                        bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.BLEU);
+                        if (!bool){
+                            bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.ORANGE);
+                            if (!bool){
+                                bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.JAUNE);
+                                if (!bool){
+                                    bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.ROUGE);
+                                    if (!bool){
+                                        bool = joueur.assezdecarte(4 - joueur.getNbGares(),CouleurWagon.ROSE);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return bool;
+    }
+    
     @Override
     public String toString() {
         return nom;

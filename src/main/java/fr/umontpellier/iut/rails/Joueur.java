@@ -312,12 +312,25 @@ public class Joueur {
                 choix.add(R.getNom());
             }
         }
-        /* on initialise les choix avant sa */String choixs=this.choisir("test",choix,choix,true);
+        
+        //GARES
+        if (nbGares > 0) {
+            
+            for (Ville gare: jeu.getVilles()) {
+                
+                if (gare.coupValide(this)) {
+                    
+                    choix.add(gare.getNom());
+                }
+            }
+        }
+        
+        String choixs=this.choisir("test",choix,choix,true);
 
         if (this.jeu.getRoutes().contains(jeu.nameToRoute(choixs))){
             this.choixRoute(jeu.nameToRoute(choixs));
         }
-        if(choixs.equals("destinations")){
+        if (choixs.equals("destinations")){
             ArrayList<Destination> dest = new ArrayList<>();
             ArrayList<Destination> destdef = new ArrayList<>();
             dest.add(jeu.piocherDestination());
@@ -369,9 +382,12 @@ public class Joueur {
                 }
             }
         }
-
-
-
+        if (jeu.getVilles().contains(jeu.nameToVille(choixs))) {
+        
+            jeu.nameToVille(choixs).setProprietaire(this);
+            score -= 4;
+            nbGares--;
+        }
     }
 
     public void choixRoute(Route r){
