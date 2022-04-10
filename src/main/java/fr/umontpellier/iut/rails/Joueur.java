@@ -485,7 +485,7 @@ public class Joueur {
                             if (str.size() > 0) {
                                 choix = choisir(this.nom + " choisir les carte a dépensé", str, str, false);
                                 coul = CouleurWagon.nomToWagon(choix);
-                                if (choixcoul==null && !(coul.equals(CouleurWagon.LOCOMOTIVE)) && assezdecarteloc(r.getLongueur()-((Ferry) r).getNbLocomotives(),coul, (Ferry) r)){
+                                if (choixcoul==null && !(coul.equals(CouleurWagon.LOCOMOTIVE)) && assezdecarteloc(r.getLongueur(),coul, (Ferry) r)){
                                     choixcoul=coul;
                                 }
                                 if (coul.equals(CouleurWagon.LOCOMOTIVE)) {
@@ -546,8 +546,7 @@ public class Joueur {
                 ArrayList<String> str = new ArrayList<>();
                 CouleurWagon coul = null,
                         choixcoul=null;
-                int lon =r.getLongueur(),
-                        nbcoul=0;
+                int lon =r.getLongueur();
                 for (CouleurWagon couls:this.getCartesWagon()){
                     str.add(couls.name());
                 }
@@ -561,11 +560,6 @@ public class Joueur {
                             coul = CouleurWagon.nomToWagon(choix);
                             if (choixcoul==null && !(coul.equals(CouleurWagon.LOCOMOTIVE)) && assezdecarte(r.getLongueur(),coul)){
                                 choixcoul=coul;
-                            }
-                            if (coul.equals(CouleurWagon.LOCOMOTIVE)) {
-                                nbcoul++;
-                            } else if (coul == choixcoul) {
-                                nbcoul++;
                             }
                         }
                     } while (choixcoul != coul && coul != CouleurWagon.LOCOMOTIVE);

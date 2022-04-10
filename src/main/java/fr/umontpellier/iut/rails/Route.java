@@ -124,16 +124,13 @@ public class Route {
                             if (!b){
                                 b=j.assezdecarteloc(this.longueur,CouleurWagon.BLEU, (Ferry) this);
                                 if (!b){
-                                    b=j.assezdecarteloc(this.longueur,CouleurWagon.BLANC, (Ferry) this);
+                                    b=j.assezdecarteloc(this.longueur,CouleurWagon.ORANGE, (Ferry) this);
                                     if (!b){
                                         b=j.assezdecarteloc(this.longueur,CouleurWagon.JAUNE, (Ferry) this);
                                         if (!b){
                                             b=j.assezdecarteloc(this.longueur,CouleurWagon.ROUGE, (Ferry) this);
                                             if (!b){
                                                 b=j.assezdecarteloc(this.longueur,CouleurWagon.ROSE, (Ferry) this);
-                                                if (!b){
-                                                    b=j.assezdecarteloc(this.longueur,CouleurWagon.ORANGE, (Ferry) this);
-                                                }
                                             }
                                         }
                                     }
@@ -169,16 +166,13 @@ public class Route {
                         if (!b){
                             b=j.assezdecarte(this.longueur,CouleurWagon.BLEU);
                             if (!b){
-                                b=j.assezdecarte(this.longueur,CouleurWagon.BLANC);
+                                b=j.assezdecarte(this.longueur,CouleurWagon.ORANGE);
                                 if (!b){
                                     b=j.assezdecarte(this.longueur,CouleurWagon.JAUNE);
                                     if (!b){
                                         b=j.assezdecarte(this.longueur,CouleurWagon.ROUGE);
                                         if (!b){
                                             b=j.assezdecarte(this.longueur,CouleurWagon.ROSE);
-                                            if (!b){
-                                                b=j.assezdecarte(this.longueur,CouleurWagon.ORANGE);
-                                            }
                                         }
                                     }
                                 }
@@ -187,29 +181,7 @@ public class Route {
                     }
                 }
             } else if (b) {
-                for (int i = 0; i < longueur; i++) {
-                    carte.add(couleur);
-                    if (joueur.containsAll(carte)) {
-                        nbcarte++;
-                        joueur.remove(carte.get(0));
-                    }
-                }
-                if (!(nbcarte == carte.size())) {
-                    int nbreste = carte.size() - nbcarte;
-                    carte.clear();
-                    for (int i = 0; i < nbreste; i++) {
-                        carte.add(CouleurWagon.LOCOMOTIVE);
-                    }
-                    ArrayList<CouleurWagon> cartlocojoueur= new ArrayList<>();
-                    for (CouleurWagon c: joueur){
-                        if (c.name().equals("LOCOMOTIVE")){
-                            cartlocojoueur.add(c);
-                        }
-                    }
-                    if (cartlocojoueur.size() != carte.size()) {
-                             b = false;
-                    }
-                }
+                b=j.assezdecarte(this.getLongueur(),this.couleur);
             }
         }else{b=false;}
 

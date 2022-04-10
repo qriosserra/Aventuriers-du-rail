@@ -76,6 +76,7 @@ public class Jeu implements Runnable {
         this.pileDestinations=Destination.makeDestinationsEurope();
         Collections.shuffle(pileDestinations);
         for (Joueur joueur: joueurs){
+
             joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
             joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
             joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
@@ -344,10 +345,10 @@ public class Jeu implements Runnable {
         while (i<this.routes.size() && b){
             r=this.routes.get(i);
             if (r.getNom().equals(name)){
-                b=false;
+                return r;
             }
             i++;
         }
-        return r;
+        return null;
     }
 }
