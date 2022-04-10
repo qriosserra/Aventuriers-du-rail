@@ -383,7 +383,26 @@ public class Joueur {
             }
         }
         if (jeu.getVilles().contains(jeu.nameToVille(choixs))) {
-        
+            choix.clear();
+            for (CouleurWagon wagon: this.cartesWagon){
+                choix.add(wagon.name());
+            }
+            String carteselectionne;
+            CouleurWagon choixcouleur=null;
+            for(int i=0; i<4-nbGares; i++) {
+                do {
+                    carteselectionne = choisir("qu'elle carte ?", choix, choix, true);
+                    if (choixcouleur == null && assezdecarte(4 - nbGares, CouleurWagon.nomToWagon(carteselectionne)) && CouleurWagon.nomToWagon(carteselectionne)!=CouleurWagon.BLEU) {
+                        choixcouleur = CouleurWagon.nomToWagon(carteselectionne);
+                    }
+                } while (choixcouleur != CouleurWagon.nomToWagon(carteselectionne) && CouleurWagon.nomToWagon(carteselectionne)!=CouleurWagon.LOCOMOTIVE);
+                this.cartesWagonPosees.add(CouleurWagon.nomToWagon(carteselectionne));
+                this.cartesWagon.remove(CouleurWagon.nomToWagon(carteselectionne));
+            }
+            for (CouleurWagon c:cartesWagonPosees){
+                jeu.defausserCarteWagon(c);
+            }
+            cartesWagonPosees.clear();
             jeu.nameToVille(choixs).setProprietaire(this);
             score -= 4;
             nbGares--;
