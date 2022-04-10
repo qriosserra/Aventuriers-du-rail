@@ -220,15 +220,6 @@ public class JoueurProfTest {
         clear();
 
         List<CouleurWagon> cartesWagon = joueur2.getCartesWagon();
-        cartesWagon.add(CouleurWagon.VERT);
-        cartesWagon.add(CouleurWagon.BLEU);
-        cartesWagon.add(CouleurWagon.BLEU);
-        cartesWagon.add(CouleurWagon.BLEU);
-        cartesWagon.add(CouleurWagon.ROUGE);
-        cartesWagon.add(CouleurWagon.ROUGE);
-        cartesWagon.add(CouleurWagon.ROUGE);
-        cartesWagon.add(CouleurWagon.LOCOMOTIVE);
-        cartesWagon.add(CouleurWagon.LOCOMOTIVE);
 
         jeu.setInput(
                 "Marseille - Paris", // coûte 4 GRIS
@@ -317,7 +308,7 @@ public class JoueurProfTest {
         );
 
         joueur2.jouerTour();
-        assertEquals(null, getRouteParNom("Marseille - Zurich").getProprietaire());
+        assertNull(getRouteParNom("Marseille - Zurich").getProprietaire());
         assertTrue(TestUtils.contientExactement(
                 joueur2.getCartesWagon(),
                 CouleurWagon.ROSE, CouleurWagon.ROUGE, CouleurWagon.ROUGE, CouleurWagon.LOCOMOTIVE));
@@ -353,7 +344,7 @@ public class JoueurProfTest {
         );
 
         joueur2.jouerTour();
-        assertEquals(null, getRouteParNom("Marseille - Zurich").getProprietaire());
+        assertNull(getRouteParNom("Marseille - Zurich").getProprietaire());
         assertTrue(TestUtils.contientExactement(
                 joueur2.getCartesWagon(),
                 CouleurWagon.ROSE, CouleurWagon.ROSE, CouleurWagon.ROUGE, CouleurWagon.ROUGE,

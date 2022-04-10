@@ -94,7 +94,6 @@ public class Route {
         return data;
     }
 
-    //pas BON !!!!
     public boolean coupValide(Joueur j){
         ArrayList<CouleurWagon> joueur=new ArrayList<>();
         joueur.addAll(j.getCartesWagon());
@@ -107,11 +106,41 @@ public class Route {
                 for (int i = 0; i < ((Ferry) this).getNbLocomotives(); i++) {
                     ferry.add(CouleurWagon.LOCOMOTIVE);
                 }
-                if (!joueur.containsAll(ferry)) {
+                int nbloc=0;
+                for (CouleurWagon c:j.getCartesWagon()){
+                    if (c==CouleurWagon.LOCOMOTIVE){
+                        nbloc++;
+                    }
+                }
+                if (nbloc<((Ferry) this).getNbLocomotives()) {
                     b = false;
                 }
                 if (this.couleur==CouleurWagon.GRIS && b){
-                    verifier_gris(joueur,this.longueur-((Ferry) this).getNbLocomotives());
+                    b=j.assezdecarteloc(this.longueur,CouleurWagon.BLANC, (Ferry) this);
+                    if (!b){
+                        b=j.assezdecarteloc(this.longueur,CouleurWagon.NOIR, (Ferry) this);
+                        if (!b){
+                            b=j.assezdecarteloc(this.longueur,CouleurWagon.VERT, (Ferry) this);
+                            if (!b){
+                                b=j.assezdecarteloc(this.longueur,CouleurWagon.BLEU, (Ferry) this);
+                                if (!b){
+                                    b=j.assezdecarteloc(this.longueur,CouleurWagon.BLANC, (Ferry) this);
+                                    if (!b){
+                                        b=j.assezdecarteloc(this.longueur,CouleurWagon.JAUNE, (Ferry) this);
+                                        if (!b){
+                                            b=j.assezdecarteloc(this.longueur,CouleurWagon.ROUGE, (Ferry) this);
+                                            if (!b){
+                                                b=j.assezdecarteloc(this.longueur,CouleurWagon.ROSE, (Ferry) this);
+                                                if (!b){
+                                                    b=j.assezdecarteloc(this.longueur,CouleurWagon.ORANGE, (Ferry) this);
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
                 }else if(b){
                     for (int i = 0; i < longueur - ((Ferry) this).getNbLocomotives(); i++) {
                         carte.add(couleur);
@@ -132,7 +161,31 @@ public class Route {
                     }
                 }
             } else if (couleur == CouleurWagon.GRIS) {
-                b=verifier_gris(joueur,this.longueur);
+                b=j.assezdecarte(this.longueur,CouleurWagon.BLANC);
+                if (!b){
+                    b=j.assezdecarte(this.longueur,CouleurWagon.NOIR);
+                    if (!b){
+                        b=j.assezdecarte(this.longueur,CouleurWagon.VERT);
+                        if (!b){
+                            b=j.assezdecarte(this.longueur,CouleurWagon.BLEU);
+                            if (!b){
+                                b=j.assezdecarte(this.longueur,CouleurWagon.BLANC);
+                                if (!b){
+                                    b=j.assezdecarte(this.longueur,CouleurWagon.JAUNE);
+                                    if (!b){
+                                        b=j.assezdecarte(this.longueur,CouleurWagon.ROUGE);
+                                        if (!b){
+                                            b=j.assezdecarte(this.longueur,CouleurWagon.ROSE);
+                                            if (!b){
+                                                b=j.assezdecarte(this.longueur,CouleurWagon.ORANGE);
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             } else if (b) {
                 for (int i = 0; i < longueur; i++) {
                     carte.add(couleur);
@@ -311,5 +364,22 @@ public class Route {
         demande[8].add(CouleurWagon.LOCOMOTIVE);
 
         return demande;
+    }
+
+    public int point(){
+        if (this.longueur==1){
+            return 1;
+        }else if (this.longueur==2){
+            return 2;
+        }else if (this.longueur==3){
+            return 4;
+        }else if (this.longueur==4){
+            return 7;
+        }else if (this.longueur==6){
+            return 15;
+        }else if (this.longueur==8){
+            return 21;
+        }
+        return 0;
     }
 }

@@ -1,6 +1,5 @@
 package fr.umontpellier.iut.rails;
 public class Ferry extends Route {
-
 	/**
 	 * Nombre de locomotives qu'un joueur doit payer pour capturer le ferry
 	 */

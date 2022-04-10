@@ -313,6 +313,7 @@ public class Joueur {
             }
         }
         String choixs=this.choisir("test",choix,choix,true);
+
         if (this.jeu.getRoutes().contains(jeu.nameToRoute(choixs))){
             this.choixRoute(jeu.nameToRoute(choixs));
         }
@@ -374,8 +375,8 @@ public class Joueur {
     }
 
     public void choixRoute(Route r){
-        if (r instanceof Tunnel){
-            if (r.getCouleur()!=CouleurWagon.GRIS) {
+        if (r instanceof Tunnel){// Tunelle
+            if (r.getCouleur()!=CouleurWagon.GRIS) {// Pas gris
                 ArrayList<String> str = new ArrayList<>();
                 CouleurWagon coul = null;
                 int lon =r.getLongueur();
@@ -423,7 +424,7 @@ public class Joueur {
                         jeu.defausserCarteWagon(c);
                     }
                     this.cartesWagonPosees.clear();
-                    this.score += r.getLongueur();
+                    this.score += r.point();
                     r.setProprietaire(this);
                 }else {
                     boolean passe=true;
@@ -449,7 +450,7 @@ public class Joueur {
                                 jeu.defausserCarteWagon(c);
                             }
                             this.cartesWagonPosees.clear();
-                            this.score += r.getLongueur();
+                            this.score += r.point();
                             r.setProprietaire(this);
                         }else{
                             this.cartesWagon.addAll(this.cartesWagonPosees);
@@ -461,10 +462,14 @@ public class Joueur {
                     }
                 }
             }
-        }else if(r instanceof Ferry){
-            if (r.getCouleur()!=CouleurWagon.GRIS) {
+
+
+
+
+        }else if(r instanceof Ferry){//les ferry tjr gris
                 ArrayList<String> str = new ArrayList<>();
-                CouleurWagon coul = null;
+                CouleurWagon coul = null,
+                             choixcoul=null;
                 int lon =r.getLongueur(),
                     nbloc=0,
                     nbcoul=0;
@@ -480,13 +485,16 @@ public class Joueur {
                             if (str.size() > 0) {
                                 choix = choisir(this.nom + " choisir les carte a dépensé", str, str, false);
                                 coul = CouleurWagon.nomToWagon(choix);
+                                if (choixcoul==null && !(coul.equals(CouleurWagon.LOCOMOTIVE)) && assezdecarteloc(r.getLongueur()-((Ferry) r).getNbLocomotives(),coul, (Ferry) r)){
+                                    choixcoul=coul;
+                                }
                                 if (coul.equals(CouleurWagon.LOCOMOTIVE)) {
                                     nbloc++;
-                                } else if (coul == r.getCouleur()) {
+                                } else if (coul == choixcoul) {
                                     nbcoul++;
                                 }
                             }
-                        } while (r.getCouleur() != coul && coul != CouleurWagon.LOCOMOTIVE);
+                        } while (choixcoul != coul && coul != CouleurWagon.LOCOMOTIVE);
                         this.cartesWagon.remove(coul);
                         this.cartesWagonPosees.add(coul);
                         str.clear();
@@ -494,16 +502,19 @@ public class Joueur {
                             str.add(couls.name());
                         }
                     }
-                }while(nbloc< ((Ferry) r).getNbLocomotives() && nbloc+nbcoul<r.getLongueur());
+                }while(nbloc< ((Ferry) r).getNbLocomotives() || nbloc+nbcoul<r.getLongueur());
                 for (CouleurWagon c: cartesWagonPosees) {
                     jeu.defausserCarteWagon(c);
                 }
                 this.cartesWagonPosees.clear();
-                this.score+=r.getLongueur();
+                this.score+=r.point();
                 r.setProprietaire(this);
-            };
-        }else{
-            if (r.getCouleur()!=CouleurWagon.GRIS) {
+        }
+
+
+
+        else{// Pour les route
+            if (r.getCouleur()!=CouleurWagon.GRIS) {// pas grise
                 ArrayList<String> str = new ArrayList<>();
                 CouleurWagon coul = null;
                 int lon =r.getLongueur();
@@ -529,9 +540,85 @@ public class Joueur {
                     jeu.defausserCarteWagon(c);
                 }
                 this.cartesWagonPosees.clear();
-                this.score+=r.getLongueur();
+                this.score+=r.point();
+                r.setProprietaire(this);
+            }else{
+                ArrayList<String> str = new ArrayList<>();
+                CouleurWagon coul = null,
+                        choixcoul=null;
+                int lon =r.getLongueur(),
+                        nbcoul=0;
+                for (CouleurWagon couls:this.getCartesWagon()){
+                    str.add(couls.name());
+                }
+                String choix;
+                this.cartesWagon.addAll(cartesWagonPosees);
+                this.cartesWagonPosees.clear();
+                for (int i = 0; i < lon; i++) {
+                    do {
+                        if (str.size() > 0) {
+                            choix = choisir(this.nom + " choisir les carte a dépensé", str, str, false);
+                            coul = CouleurWagon.nomToWagon(choix);
+                            if (choixcoul==null && !(coul.equals(CouleurWagon.LOCOMOTIVE)) && assezdecarte(r.getLongueur(),coul)){
+                                choixcoul=coul;
+                            }
+                            if (coul.equals(CouleurWagon.LOCOMOTIVE)) {
+                                nbcoul++;
+                            } else if (coul == choixcoul) {
+                                nbcoul++;
+                            }
+                        }
+                    } while (choixcoul != coul && coul != CouleurWagon.LOCOMOTIVE);
+                    this.cartesWagon.remove(coul);
+                    this.cartesWagonPosees.add(coul);
+                    str.clear();
+                    for (CouleurWagon couls : this.getCartesWagon()) {
+                        str.add(couls.name());
+                    }
+                }
+                for (CouleurWagon c: cartesWagonPosees) {
+                    jeu.defausserCarteWagon(c);
+                }
+                this.cartesWagonPosees.clear();
+                this.score+=r.point();
                 r.setProprietaire(this);
             }
         }
+    }
+
+    public boolean assezdecarte(int nb, CouleurWagon C){
+        boolean b=false;
+        int i=0;
+        int nbcarte=0;
+        while(!b && i<this.cartesWagon.size()){
+            if (this.cartesWagon.get(i)==C || this.cartesWagon.get(i)==CouleurWagon.LOCOMOTIVE) {
+                nbcarte++;
+            }
+            if(nbcarte>=nb){
+                b=true;
+            }
+            i++;
+        }
+        return b;
+    }
+
+    public boolean assezdecarteloc(int nb, CouleurWagon C, Ferry r){
+        boolean b=false;
+        int i=0;
+        int nbcarte=0;
+        int nbloc=0;
+        while(!b && i<this.cartesWagon.size()){
+            if (this.cartesWagon.get(i)==CouleurWagon.LOCOMOTIVE){
+                nbloc++;
+            }
+            if (this.cartesWagon.get(i)==C || (this.cartesWagon.get(i)==CouleurWagon.LOCOMOTIVE && nbloc>=r.getNbLocomotives()) ){
+                nbcarte++;
+            }
+            if(nbcarte>=nb){
+                b=true;
+            }
+            i++;
+        }
+        return b;
     }
 }
