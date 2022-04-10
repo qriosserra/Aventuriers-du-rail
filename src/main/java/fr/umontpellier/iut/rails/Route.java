@@ -147,7 +147,13 @@ public class Route {
                     for (int i = 0; i < nbreste; i++) {
                         carte.add(CouleurWagon.LOCOMOTIVE);
                     }
-                    if (!joueur.containsAll(carte)) {
+                    ArrayList<CouleurWagon> cartlocojoueur= new ArrayList<>();
+                    for (CouleurWagon c: joueur){
+                        if (c.name().equals("LOCOMOTIVE")){
+                            cartlocojoueur.add(c);
+                        }
+                    }
+                    if (cartlocojoueur.size() != carte.size()) {
                              b = false;
                     }
                 }

@@ -316,7 +316,18 @@ public class Joueur {
         if (this.jeu.getRoutes().contains(jeu.nameToRoute(choixs))){
             this.choixRoute(jeu.nameToRoute(choixs));
         }
+        if(choixs.equals("destinations")){
+            ArrayList<Destination> dest = new ArrayList<>();
+            ArrayList<Destination> destdef = new ArrayList<>();
+            dest.add(jeu.piocherDestination());
+            dest.add(jeu.piocherDestination());
+            dest.add(jeu.piocherDestination());
+            destdef= (ArrayList<Destination>) this.choisirDestinations(dest,2);
+            for (Destination d:destdef){
+                jeu.getPileDestinations().add(d);
+            }
 
+        }
         if (this.jeu.getCartesWagonVisibles().contains(CouleurWagon.nomToWagon(choixs)) || choixs.equals("GRIS")){
             if(choixs.equals("LOCOMOTIVE")){
                 this.cartesWagon.add(CouleurWagon.LOCOMOTIVE);
@@ -389,7 +400,11 @@ public class Joueur {
                         str.add(couls.name());
                     }
                 }
+                for (CouleurWagon c: cartesWagonPosees) {
+                    jeu.defausserCarteWagon(c);
+                }
                 this.cartesWagonPosees.clear();
+                this.score+=r.getLongueur();
                 r.setProprietaire(this);
             }
         }
