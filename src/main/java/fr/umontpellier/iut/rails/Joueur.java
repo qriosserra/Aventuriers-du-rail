@@ -312,7 +312,7 @@ public class Joueur {
                 choix.add(R.getNom());
             }
         }
-        String choixs=this.choisir("test",choix,choix,true);
+        /* on initialise les choix avant sa */String choixs=this.choisir("test",choix,choix,true);
 
         if (this.jeu.getRoutes().contains(jeu.nameToRoute(choixs))){
             this.choixRoute(jeu.nameToRoute(choixs));
