@@ -81,8 +81,8 @@ public class Jeu implements Runnable {
             joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));
             joueur.getCartesWagon().add(this.pileCartesWagon.remove(0));*/
 
-            joueur.getCartesWagon().add(CouleurWagon.BLEU);
-            joueur.getCartesWagon().add(CouleurWagon.BLEU);
+            joueur.getCartesWagon().add(CouleurWagon.ROSE);
+            joueur.getCartesWagon().add(CouleurWagon.ROSE);
             joueur.getCartesWagon().add(CouleurWagon.ROUGE);
             joueur.getCartesWagon().add(CouleurWagon.ROUGE);
             joueur.getCartesWagon().add(CouleurWagon.LOCOMOTIVE);
