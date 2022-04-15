@@ -1,0 +1,41 @@
+fr.umontpellier.iut.rails.ConservationTest
+  ! Aucun résultat (erreur de compilation ou timeout)
+fr.umontpellier.iut.rails.JeuProfExtraTest
+  ! Aucun résultat (erreur de compilation ou timeout)
+fr.umontpellier.iut.rails.JeuProfTest
+  ! Aucun résultat (erreur de compilation ou timeout)
+fr.umontpellier.iut.rails.JoueurProfExtraTest
+ ✓  testScoreRouteLongueur1
+ ✓  testScoreRouteLongueur2
+ ✓  testScoreRouteLongueur3
+ ✓  testScoreRouteLongueur4
+  ✗ testScoreRouteLongueur6
+ ✓  testScoreRouteLongueur8
+  ✗ testConstruireDeuxiemeGareAvecLocomotives
+ ✓  testScoreGare
+ ✓  testConstruireGareSiNbGaresZero
+  ✗ testCapturerTunnelPiochVide
+  ✗ testPrendreCartesWagonLocomotiveEnDeuxième
+  ✗ testConstruireDeuxGares
+ ✓  testConstruireGareEnChangeantDeCouleur
+ ✓  testAnnulerAchatTunnelPuisConstruireGare
+ ✓  testPrendreCartesWagonLocomotiveEnPremier
+ ✓  testPrendre2CartesWagonsVisibles
+  ✗ testCapturerTunnelPiochVideDefausseVide
+ ✓  testCapturerRouteCouleursDifferentes
+ ✓  testPrendre2CartesWagonsVisiblesPilesVides
+ ✓  testCapturerTunnel2CartesSupplementaires
+fr.umontpellier.iut.rails.JoueurProfTest
+  ! Aucun résultat (erreur de compilation ou timeout)
+fr.umontpellier.iut.rails.PartieAleatoireTest
+  ! Aucun résultat (erreur de compilation ou timeout)
+fr.umontpellier.iut.rails.SubRouteTest
+  ✗ testNouvelleSousClasseRoute
+
+14 / 21 tests réussis
+(5 erreurs de compilation)
+
+Messages:
+# Created at 2022-04-15T15:30:30.797
+Killing self fork JVM. Received SHUTDOWN command from Maven shutdown hook.
+Note: 1.6/20
