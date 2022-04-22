@@ -1,9 +1,34 @@
 fr.umontpellier.iut.rails.ConservationTest
-  ! Aucun résultat (erreur de compilation ou timeout)
+ ✓  testConstruireTunnelSupplementDeuxCartesSuccess
+  ✗ testPrendreCartesWagonVisibles3LocomotivesPiocheVide (timeout)
+ ✓  testConstruireTunnelSupplementDeuxCartesAbandon
+  ✗ testPrendreCartesWagonVisibles3Locomotives (timeout)
+ ✓  testConstruireTunnelPasDeSupplement
+  ✗ testPrendreCartesVisiblesPiocheVide
+ ✓  testCapturerVilles
+ ✓  testConstruireTunnelSupplementDeuxCartesEchec
+ ✓  testPrendreCartesWagonVisibles
+ ✓  testConstruireFerry
+ ✓  testConstruireRoute
 fr.umontpellier.iut.rails.JeuProfExtraTest
-  ! Aucun résultat (erreur de compilation ou timeout)
+ ✓  testPiocheDestination
+ ✓  testPiocheDestinationPileVide
+  ✗ testInitialisationMelangeCartesWagon (timeout)
+ ✓  testRetirerCarteVisiblePiocheEtDefausseVide
+  ✗ testInitialisationCartesVisibles3Locomotives (timeout)
+ ✓  testChangementJoueurActif
+ ✓  testPiocherCarteWagon
+ ✓  testRetirerCarteVisible
+  ✗ testPiocherCarteWagonPiocheVide
+  ✗ testFinDePartie
+ ✓  testDefausserCarteWagon
+ ✓  testDefausserCarteWagonCartesVisiblesManquantes
+ ✓  testDestinationsInitialesTousLesJoueursDefaussent
+  ✗ testDestinationsInitialesChangementJoueurActif
 fr.umontpellier.iut.rails.JeuProfTest
-  ! Aucun résultat (erreur de compilation ou timeout)
+ ✓  testInitialisationCartesVisibles
+ ✓  testCartesWagon
+ ✓  testDestinationsInitialesTousLesJoueursPassent
 fr.umontpellier.iut.rails.JoueurProfExtraTest
  ✓  testScoreRouteLongueur1
  ✓  testScoreRouteLongueur2
@@ -26,16 +51,21 @@ fr.umontpellier.iut.rails.JoueurProfExtraTest
  ✓  testPrendre2CartesWagonsVisiblesPilesVides
  ✓  testCapturerTunnel2CartesSupplementaires
 fr.umontpellier.iut.rails.JoueurProfTest
-  ! Aucun résultat (erreur de compilation ou timeout)
+ ✓  testJouerTourCapturerTunnelOK
+ ✓  testJouerTourCapturerTunnelImpossible
+ ✓  testJouerTourPiocherDestinations
+ ✓  testJouerTourCapturerRoutePlusieursCouleursPossibles
+ ✓  testJouerTourConstruireUneGare
+ ✓  testInitialisation
+ ✓  testChoisirDestinations
+ ✓  testJouerTourPrendreCartesWagon
+ ✓  testJouerTourCapturerTunnelAbandonne
+ ✓  testJouerTourCapturerFerry
+ ✓  testJouerTourCapturerRoute
 fr.umontpellier.iut.rails.PartieAleatoireTest
-  ! Aucun résultat (erreur de compilation ou timeout)
+  ✗ testPartieAleatoire
 fr.umontpellier.iut.rails.SubRouteTest
   ✗ testNouvelleSousClasseRoute
 
-14 / 21 tests réussis
-(5 erreurs de compilation)
-
-Messages:
-# Created at 2022-04-15T15:30:30.797
-Killing self fork JVM. Received SHUTDOWN command from Maven shutdown hook.
-Note: 1.6/20
+45 / 61 tests réussis
+Note: 13.4/20
